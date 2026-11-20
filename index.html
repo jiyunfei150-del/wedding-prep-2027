@@ -4,186 +4,554 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#fcf9f7">
+  <meta name="theme-color" content="#5f1829">
   <title>婚礼筹备清单</title>
   <style>
     :root {
       color-scheme: light;
-      --paper: #fcf9f7;
-      --ink: #302426;
-      --muted: #69585b;
-      --wine: #792d43;
-      --line: #e5d8d5;
-      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
-      line-height: 1.65;
-      background: var(--paper);
-      color: var(--ink);
+      --bg: #f6f0e8;
+      --card: #fffdf9;
+      --ink: #2a1d1f;
+      --muted: #76655f;
+      --wine: #7d2439;
+      --wine-deep: #4d1221;
+      --gold: #a37a3f;
+      --gold-lt: #e8d2a8;
+      --line: #e7dccf;
+      --blush: #f6e7e2;
+      --sans: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+      --serif: "Songti SC", "STSong", "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "STZhongsong", SimSun, serif;
+      --num: Didot, "Bodoni 72", "Bodoni MT", Cambria, "Noto Serif", "Times New Roman", serif;
+      --gutter: 1rem;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
-    body { margin: 0; }
-    body:has(dialog:modal) { overflow: hidden; }
-    h1, h2, h3, p, ul, dl { margin: 0; }
-    a { color: var(--wine); }
-    :where(a, button, input, summary):focus-visible {
-      outline: 2px solid var(--wine);
-      outline-offset: 4px;
-    }
-
-    .shell { width: min(55rem, calc(100% - 2.5rem)); margin-inline: auto; }
-    .skip { position: absolute; top: .75rem; left: .75rem; z-index: 2; padding: .45rem .6rem; background: var(--paper); transform: translateY(-175%); }
+    [hidden] { display: none !important; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1rem/1.7 var(--sans); }
+    h1, h2, h3, h4, p, ul, ol, dl, dd { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    a { color: var(--wine); text-underline-offset: .2em; }
+    button { font: inherit; color: inherit; }
+    :where(a, button, input, summary):focus-visible { outline: 2px solid var(--wine); outline-offset: 3px; border-radius: 4px; }
+    .shell { width: min(50rem, calc(100% - 2 * var(--gutter))); margin-inline: auto; }
+    .skip { position: absolute; top: .75rem; left: .75rem; z-index: 20; padding: .45rem .7rem; border-radius: .4rem; background: var(--card); transform: translateY(-200%); }
     .skip:focus { transform: none; }
-    .intro { display: flex; justify-content: space-between; align-items: end; flex-wrap: wrap; gap: .8rem 1.5rem; padding-block: clamp(1.8rem, 4.8vw, 3.1rem) 1.15rem; border-bottom: 1px solid var(--line); }
-    .date { display: grid; justify-items: end; color: var(--wine); line-height: 1.15; }
-    .date-meta { font-size: .9375rem; }
-    .date-number { font: 400 clamp(2.45rem, 6vw, 4.6rem)/1 Georgia, "Times New Roman", serif; letter-spacing: -.035em; }
-    h1, h2 { font-family: "Songti SC", SimSun, "Noto Serif CJK SC", serif; }
-    h1 { font-size: clamp(2.25rem, 6vw, 3.75rem); line-height: 1.2; }
-    h2 { font-size: 1.435rem; line-height: 1.4; }
-    h3 { font-size: 1.125rem; line-height: 1.45; }
-    .venue { margin-top: .5rem; color: var(--muted); }
 
-    .priority { margin-block: 1.4rem 1.55rem; }
-    .priority-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem 2rem; margin-top: .35rem; padding: 0; list-style: none; }
-    .priority-grid p { padding-left: 1.625rem; color: var(--muted); }
-    .task { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: .5rem; padding: .36rem 0; cursor: pointer; }
-    .task input { width: 1.125rem; height: 1.125rem; margin: .24rem 0 0; accent-color: var(--wine); }
-    .task input:checked + span { color: var(--muted); text-decoration: line-through; }
+    /* ───── 封面 ───── */
+    .hero { position: relative; overflow: hidden; color: #fbf3e8; background:
+        radial-gradient(90% 120% at 100% 0%, #a23a56 0%, transparent 58%),
+        radial-gradient(70% 90% at 0% 100%, #3b0d19 0%, transparent 60%),
+        linear-gradient(160deg, #74203a, var(--wine-deep)); }
+    .hero::before { content: "囍"; position: absolute; right: -.08em; top: 50%; transform: translateY(-52%); font: 700 clamp(15rem, 44vw, 25rem)/1 var(--serif); color: #fff; opacity: .055; pointer-events: none; }
+    .hero::after { content: ""; position: absolute; inset: .7rem; border: 1px solid rgb(232 210 168 / .32); border-radius: .35rem; pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; display: grid; gap: 2.2rem; padding-block: clamp(2.8rem, 8vw, 4.4rem) clamp(2.4rem, 6vw, 3.4rem); }
+    .hero h1 { display: flex; align-items: center; gap: .9rem; font: 400 .95rem/1.4 var(--sans); letter-spacing: .5em; color: var(--gold-lt); }
+    .hero h1::after { content: ""; flex: 0 0 3rem; height: 1px; background: currentColor; opacity: .6; }
+    .hero-date { display: grid; margin-top: 1.1rem; font-family: var(--num); line-height: 1; }
+    .hero-date .y { font-size: clamp(1.15rem, 3vw, 1.5rem); letter-spacing: .32em; color: var(--gold-lt); }
+    .hero-date .md { margin-top: .35rem; font-size: clamp(4.6rem, 19vw, 8.2rem); letter-spacing: -.02em; }
+    .hero-date .md i { font-style: normal; color: var(--gold-lt); margin-inline: .04em; }
+    .hero-venue { margin-top: 1.1rem; font: 400 clamp(1.05rem, 2.6vw, 1.25rem)/1.5 var(--serif); letter-spacing: .08em; }
+    .hero-venue span { color: var(--gold-lt); margin-inline: .5em; }
+    .stats { display: grid; grid-template-columns: auto minmax(0, 1fr); padding-top: 1.4rem; border-top: 1px solid rgb(232 210 168 / .28); }
+    .stat { padding-right: clamp(1.4rem, 5vw, 2.6rem); }
+    .stat + .stat { padding: 0 0 0 clamp(1.4rem, 5vw, 2.6rem); border-left: 1px solid rgb(232 210 168 / .28); }
+    .stat-label { font-size: .8125rem; letter-spacing: .22em; color: var(--gold-lt); }
+    .stat-value { display: flex; align-items: baseline; gap: .4rem; margin-top: .15rem; font: 400 2.5rem/1.15 var(--num); white-space: nowrap; }
+    .stat-value small { font: 400 .9375rem/1 var(--sans); opacity: .85; }
+    .meter { height: 3px; margin-top: .7rem; border-radius: 3px; background: rgb(255 255 255 / .16); overflow: hidden; }
+    .meter span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--gold-lt); transition: width .4s ease; }
 
-    .overview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem 2rem; }
-    .overview-item { padding-top: .65rem; border-top: 1px solid var(--line); }
-    .overview-link { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem; min-height: 2.55rem; padding-block: .15rem; color: var(--ink); text-decoration: none; }
-    .overview-link:hover { color: var(--wine); }
-    .overview-link .entry-action { color: var(--wine); font: 600 .875rem/1.3 "PingFang SC", "Microsoft YaHei", sans-serif; white-space: nowrap; }
-    .overview-link:hover .entry-action { text-decoration: underline; text-underline-offset: .2em; }
-    .preview-list { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: baseline; gap: .18rem .7rem; }
-    .preview-list dt { color: var(--wine); font-size: .9375rem; font-weight: 650; }
-    .preview-list dd { margin: 0; color: var(--muted); }
+    /* ───── 版块 ───── */
+    .section { padding-top: clamp(2.4rem, 7vw, 3.4rem); }
+    [id] { scroll-margin-top: 4.5rem; }
+    .sec-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: .2rem 1rem; }
+    .sec-head h2 { font: 700 clamp(1.55rem, 4.6vw, 1.9rem)/1.3 var(--serif); letter-spacing: .04em; }
+    .sec-head p { color: var(--muted); font-size: .9375rem; }
+    .sec-head .aside { margin-left: auto; }
+    .text-button { padding: .2rem 0; border: 0; background: none; color: var(--wine); cursor: pointer; font-size: .9rem; text-decoration: underline; text-underline-offset: .2em; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 1rem; box-shadow: 0 1px 2px rgb(77 18 33 / .04), 0 10px 28px -18px rgb(77 18 33 / .22); }
 
-    .page-footer { margin-top: 1.2rem; padding-block: .65rem 1.8rem; border-top: 1px solid var(--line); }
-    .progress-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .9rem; }
-    .progress { color: var(--muted); font-size: .9375rem; }
-    .copy-button { display: inline-block; min-height: 2.25rem; padding: .2rem 0; border: 0; background: transparent; color: var(--wine); cursor: pointer; font: inherit; font-weight: 650; text-decoration: underline; text-underline-offset: .2em; }
-    .copy-result { color: var(--muted); font-size: .9rem; }
-    .copy-result:not(:empty) { margin-top: .3rem; }
-    .link-preview { width: 100%; margin-top: .35rem; padding: .45rem; border: 1px solid var(--line); border-radius: .3rem; color: var(--ink); background: white; font: inherit; }
-    .done { margin-top: .5rem; color: var(--muted); font-size: .9rem; }
-    .done strong { margin-right: .35rem; color: var(--ink); }
+    /* ───── 事项筛选 ───── */
+    .filters { position: sticky; top: 0; z-index: 5; display: flex; gap: .45rem; margin: .5rem calc(-1 * var(--gutter)) .7rem; padding: .7rem var(--gutter); overflow-x: auto; scrollbar-width: none; background: rgb(246 240 232 / .92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+    .filters::-webkit-scrollbar { display: none; }
+    .chip { flex: none; display: inline-flex; align-items: center; gap: .4rem; min-height: 2.25rem; padding: .2rem .9rem; border: 1px solid #dccdbd; border-radius: 99px; background: var(--card); color: var(--ink); cursor: pointer; font-size: .9rem; white-space: nowrap; transition: background .15s, color .15s, border-color .15s; }
+    .chip:hover { border-color: var(--wine); }
+    .chip b { font: 400 .9rem/1 var(--num); color: var(--gold); }
+    .chip[aria-pressed="true"] { border-color: var(--wine); background: var(--wine); color: #fff; }
+    .chip[aria-pressed="true"] b { color: var(--gold-lt); }
 
-    .panel { width: min(41rem, calc(100% - 1.75rem)); max-width: none; max-height: 86dvh; padding: 0; overflow: auto; border: 0; border-radius: .9rem; background: var(--paper); color: var(--ink); box-shadow: 0 1rem 4.5rem #35222544; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #b89ba1 transparent; }
-    .panel::backdrop { background: #33262a77; }
-    .panel:not(:modal) { position: static; max-height: none; margin: 1rem auto; box-shadow: none; }
-    .panel-header { position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .78rem 1.25rem; border-bottom: 1px solid var(--line); background: var(--paper); }
-    .panel:not(:modal) .panel-close { display: none; }
-    .close-button { display: grid; place-items: center; width: 2.65rem; height: 2.65rem; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--wine); cursor: pointer; font: 400 1.65rem/1 Georgia, serif; }
-    .close-button:hover { background: #f2e8e6; }
-    .panel-body { padding: .75rem 1.25rem 1.35rem; }
-    .panel [id] { scroll-margin-top: 4.75rem; }
+    /* ───── 主线 ───── */
+    .timeline { position: relative; display: grid; gap: .8rem; padding-left: 1.7rem; }
+    .timeline::before { content: ""; position: absolute; left: .34rem; top: .7rem; bottom: 1.7rem; width: 1px; background: #d9c9ba; }
+    .stage { position: relative; }
+    .stage::before { content: ""; position: absolute; left: -1.7rem; top: 1.55rem; width: .75rem; height: .75rem; border: 2px solid #cdb6a0; border-radius: 50%; background: var(--bg); }
+    .stage.is-current::before, .stage.is-pinned::before { border-color: var(--wine); background: var(--wine); box-shadow: 0 0 0 4px rgb(125 36 57 / .14); }
+    .stage.is-done::before, .settled::before { border-color: var(--gold); background: var(--gold); box-shadow: none; }
 
-    .stage + .stage { border-top: 1px solid var(--line); }
-    .stage summary { padding: .67rem 0; cursor: pointer; }
-    .stage summary::marker { color: var(--wine); }
-    .stage-window { display: inline-block; min-width: 10rem; margin-right: .35rem; color: var(--wine); font-size: .9375rem; }
-    .stage-title { font-weight: 700; overflow-wrap: anywhere; }
-    .task-list { margin: 0 0 .6rem; padding: 0 0 0 .9rem; list-style: none; }
-    .task-list .task { padding: .45rem 0; }
+    .settled { padding: .15rem 0 .5rem; }
+    .settled::before { top: .45rem; }
+    .settled h3 { font-size: .8125rem; font-weight: 400; letter-spacing: .22em; color: var(--gold); }
+    .settled ul { display: flex; flex-wrap: wrap; gap: .45rem .5rem; margin-top: .5rem; }
+    .settled li { display: inline-flex; align-items: center; gap: .4rem; padding: .18rem .75rem .18rem .6rem; border: 1px solid var(--line); border-radius: 99px; background: rgb(255 253 249 / .7); color: var(--muted); font-size: .875rem; }
+    .settled li::before { content: ""; width: .3rem; height: .55rem; margin: -.15rem .1rem 0 .15rem; border: solid var(--gold); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
 
-    .panel-section { padding-block: .35rem; }
-    .panel-section + .panel-section { margin-top: .75rem; padding-top: .9rem; border-top: 1px solid var(--line); }
-    .panel-section h3 { margin-bottom: .55rem; }
-    .event-list > div + div { margin-top: .7rem; }
-    .event-list dt { color: var(--wine); font-weight: 700; }
-    .event-list dd { margin: .1rem 0 0; }
-    .note { margin-top: .65rem; color: var(--muted); }
-    .subcard { margin-top: .85rem; padding-top: .8rem; border-top: 1px solid var(--line); }
-    .subcard h3 { margin-bottom: .3rem; }
+    .stage-head { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: .9rem; padding: 1rem 1.15rem; border-radius: 1rem; }
+    summary.stage-head { cursor: pointer; list-style: none; }
+    summary.stage-head::-webkit-details-marker { display: none; }
+    .stage-window { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; color: var(--wine); font-size: .875rem; letter-spacing: .04em; }
+    .now { padding: .05rem .55rem; border-radius: 99px; background: var(--wine); color: #fff; font-size: .75rem; font-style: normal; letter-spacing: .1em; }
+    .stage-title { display: block; margin-top: .1rem; font: 700 1.125rem/1.5 var(--serif); letter-spacing: .02em; }
+    .stage-count { min-width: 3.1rem; padding: .1rem .6rem; border-radius: 99px; background: var(--blush); color: var(--wine); font: 400 .9375rem/1.6 var(--num); text-align: center; white-space: nowrap; }
+    .stage.is-done .stage-count { background: #f1e6cf; color: #7a5a26; }
+    .chev { width: .6rem; height: .6rem; margin: -.3rem .2rem 0 0; border: solid #b9a498; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); transition: transform .2s, margin .2s; }
+    .stage[open] .chev { margin-top: .3rem; transform: rotate(225deg); }
+    .is-pinned { border-color: #d9b3b6; background: linear-gradient(180deg, #fdf3ef, var(--card) 5.5rem); }
+    .is-pinned.is-done { border-color: var(--line); background: var(--card); }
+
+    .task-list { margin: 0 1.15rem; padding: .3rem 0 .6rem; border-top: 1px solid var(--line); }
+    .task-list > li { padding: .72rem 0; }
+    .task-list > li + li { border-top: 1px dashed #ebe0d4; }
+    .task { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: .8rem; cursor: pointer; }
+    .task input { appearance: none; -webkit-appearance: none; display: grid; place-content: center; width: 1.4rem; height: 1.4rem; margin: .15rem 0 0; border: 1.5px solid #cdb6aa; border-radius: 50%; background: #fff; cursor: pointer; transition: background .15s, border-color .15s; }
+    .task input::after { content: ""; width: .36rem; height: .66rem; margin-top: -.14rem; border: solid #fff; border-width: 0 2px 2px 0; transform: rotate(45deg) scale(0); transition: transform .15s; }
+    .task:hover input { border-color: var(--wine); }
+    .task input:checked { background: var(--wine); border-color: var(--wine); }
+    .task input:checked::after { transform: rotate(45deg) scale(1); }
+    .task input:checked + span { color: #a2928c; text-decoration: line-through; text-decoration-color: #cbbdb6; }
+    .is-pinned .task > span { font-weight: 650; font-size: 1.0625rem; }
+    .tag { display: inline-block; margin-left: .45rem; padding: 0 .5rem; border-radius: 99px; background: #f1e8dc; color: #8a7466; font: 400 .75rem/1.6 var(--sans); font-style: normal; vertical-align: .1em; white-space: nowrap; }
+    .memo { margin-top: .3rem; padding-left: 2.2rem; color: var(--muted); font-size: .9rem; line-height: 1.7; }
+    .memo + .memo { margin-top: .35rem; }
+    .memo b { margin-right: .55em; color: var(--wine); font-weight: 650; }
+    li:has(> .task input:checked) > .memo { opacity: .55; }
+
+    /* ───── 婚礼周末 ───── */
+    .days { display: grid; gap: .8rem; margin-top: 1.2rem; }
+    .day { display: grid; grid-template-columns: 7.2rem minmax(0, 1fr); gap: .3rem 1.6rem; padding: 1.3rem 1.4rem; }
+    .day-no { font: 400 2.7rem/1 var(--num); color: var(--wine); }
+    .day-no small { margin-left: .12rem; font-size: 1.15rem; color: var(--gold); }
+    .day-week { margin-top: .35rem; color: var(--muted); font-size: .875rem; line-height: 1.45; }
+    .day h3 { font: 700 1.125rem/1.5 var(--serif); letter-spacing: .02em; }
+    .day-body > p { margin-top: .25rem; }
+    .meal-rows { margin-top: .85rem; border-top: 1px solid var(--line); }
+    .meal-rows > div { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: .8rem; padding-top: .7rem; font-size: .9375rem; }
+    .meal-rows dt { color: var(--gold); font-weight: 650; }
+    .meal-rows dd { color: var(--muted); }
+    .day.is-wedding { border-color: transparent; color: #fbf3e8; background:
+        radial-gradient(80% 120% at 100% 0%, #99334f 0%, transparent 60%),
+        linear-gradient(160deg, #74203a, var(--wine-deep)); }
+    .day.is-wedding .day-no { color: #fbf3e8; }
+    .day.is-wedding .day-week, .day.is-wedding .meal-rows dt { color: var(--gold-lt); }
+    .day.is-wedding .meal-rows { border-top-color: rgb(232 210 168 / .28); }
+    .day.is-wedding .meal-rows dd { color: rgb(251 243 232 / .86); }
+    .note { display: flex; gap: .7rem; margin-top: .9rem; padding: .8rem 1rem; border-radius: .8rem; background: var(--blush); color: #6a3a44; font-size: .9375rem; }
+    .note::before { content: "注"; flex: none; width: 1.5rem; height: 1.5rem; margin-top: .08rem; border-radius: 50%; background: var(--wine); color: #fff; font-size: .75rem; line-height: 1.5rem; text-align: center; }
+
+    /* ───── 页脚 ───── */
+    .page-footer { margin-top: clamp(2.6rem, 7vw, 3.6rem); padding-block: 1.4rem 2.6rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    .progress-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; }
+    .progress { color: var(--ink); font-weight: 650; }
+    .copy-button { min-height: 2.5rem; padding: .35rem 1.1rem; border: 1px solid var(--wine); border-radius: 99px; background: transparent; color: var(--wine); cursor: pointer; font-size: .9rem; font-weight: 650; transition: background .15s, color .15s; }
+    .copy-button:hover { background: var(--wine); color: #fff; }
+    .hint { margin-top: .6rem; }
+    .copy-result:not(:empty) { margin-top: .5rem; color: var(--wine); }
+    .link-preview { width: 100%; margin-top: .5rem; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: .5rem; background: #fff; color: var(--ink); font: inherit; }
 
     @media (max-width: 35rem) {
-      .shell { width: calc(100% - 2rem); }
-      .intro { align-items: start; }
-      .date { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; }
-      .date-number { font-size: 2.05rem; }
-      .priority { margin-block: 1.45rem 1.2rem; }
-      .priority-grid, .overview { grid-template-columns: minmax(0, 1fr); }
-      .panel-header { padding-inline: .9rem; }
-      .panel-body { padding-inline: .9rem; }
-      .stage-window { min-width: 0; }
+      .hero h1 { letter-spacing: .38em; }
+      .timeline { padding-left: 1.35rem; }
+      .timeline::before { left: .3rem; }
+      .stage::before { left: -1.35rem; width: .65rem; height: .65rem; }
+      .stage-head { gap: .6rem; padding: .9rem .95rem; }
+      .task-list { margin-inline: .95rem; }
+      .day { grid-template-columns: minmax(0, 1fr); padding: 1.15rem 1.1rem 1.25rem; }
+      .day-date { display: flex; align-items: baseline; gap: .7rem; margin-bottom: .5rem; }
+      .day-no { font-size: 2.3rem; }
+      .day-week { margin-top: 0; }
+      .sec-head p { order: 3; flex-basis: 100%; }
     }
-
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
     @media print {
-      :root, .panel, .panel-header { background: white; }
-      .skip, .progress-tools, .panel-close, .panel::backdrop, .entry-action { display: none; }
-      .panel, .panel:modal { position: static; display: block; width: 100%; max-height: none; overflow: visible; margin: 0 0 1rem; box-shadow: none; }
-      .panel-header { position: static; padding-top: 0; }
+      body, .hero, .day.is-wedding { background: #fff; color: #000; }
+      .hero::before, .hero::after, .filters, .skip, .progress-tools, .chev, .text-button { display: none; }
+      .hero h1, .hero-date .y, .hero-date .md i, .stat-label, .hero-venue span, .day.is-wedding .day-no, .day.is-wedding .day-week { color: #000; }
+      .card { box-shadow: none; break-inside: avoid; }
+      .day.is-wedding { border-color: var(--line); }
+      .day.is-wedding .meal-rows dd { color: var(--muted); }
       .stage::details-content { display: block; content-visibility: visible; }
-      .intro { padding-top: 0; }
     }
   </style>
 </head>
 <body>
-  <a class="skip" href="#first">跳到先办的事</a>
-  <main class="shell">
-    <header class="intro">
-      <div>
-        <h1 id="page-title">婚礼筹备清单</h1>
-        <p class="venue">盐城幸福来临酒店 · 周日晚宴</p>
-      </div>
-      <time class="date" datetime="2027-03-28" aria-label="2027 年 3 月 28 日">
-        <span class="date-meta">2027 年</span>
-        <span class="date-number">03.28</span>
-      </time>
-    </header>
+  <a class="skip" href="#checklist">跳到筹备清单</a>
 
-    <section class="priority" aria-labelledby="first">
-      <h2 id="first">先办这两件事</h2>
-      <ul class="priority-grid">
-        <li>
-          <label class="task">
-            <input type="checkbox" data-task="banquet-timing">
-            <span><strong>确定晚宴开席和预计散席时间</strong></span>
-          </label>
-          <p>跟幸福来临和司仪确认开席、预计散席，以及仪式开始时间。</p>
-        </li>
-        <li>
-          <label class="task">
-            <input type="checkbox" data-task="guest-driving-plan">
-            <span><strong>按车确认女方亲友去留</strong></span>
-          </label>
-          <p>发出预计散席时间，再问谁自驾返家、谁续住到 29 日。<a href="#rooms" aria-haspopup="dialog">看登记项</a></p>
-        </li>
-      </ul>
+  <header class="hero">
+    <div class="shell hero-inner">
+      <div>
+        <h1>婚礼筹备清单</h1>
+        <time class="hero-date" datetime="2027-03-28" aria-label="2027 年 3 月 28 日">
+          <span class="y">2027</span>
+          <span class="md">03<i>.</i>28</span>
+        </time>
+        <p class="hero-venue">周日晚宴<span aria-hidden="true">·</span>盐城幸福来临酒店</p>
+      </div>
+      <div id="stats" class="stats" hidden>
+        <div class="stat">
+          <p id="countdown-label" class="stat-label">距离婚礼</p>
+          <p class="stat-value"><span id="countdown">—</span><small id="countdown-unit">天</small></p>
+        </div>
+        <div class="stat">
+          <p class="stat-label">筹备进度</p>
+          <p class="stat-value"><span id="done-count">0</span><small>/ <span id="total-count">0</span> 项已办</small></p>
+          <div class="meter" aria-hidden="true"><span id="meter-fill"></span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="shell">
+    <section class="section" aria-labelledby="checklist">
+      <header class="sec-head">
+        <h2 id="checklist">筹备清单</h2>
+        <p>从现在到婚礼，按时间往下办</p>
+        <button id="toggle-stages" class="text-button aside" type="button" hidden>全部展开</button>
+      </header>
+
+      <div id="filters" class="filters" role="group" aria-label="按事项筛选" hidden>
+        <button class="chip" type="button" data-filter="" aria-pressed="true">全部</button>
+        <button class="chip" type="button" data-filter="婚纱照" aria-pressed="false">婚纱照 <b></b></button>
+        <button class="chip" type="button" data-filter="服装妆造" aria-pressed="false">服装妆造 <b></b></button>
+        <button class="chip" type="button" data-filter="亲友接待" aria-pressed="false">亲友接待 <b></b></button>
+        <button class="chip" type="button" data-filter="现场流程" aria-pressed="false">现场流程 <b></b></button>
+        <button class="chip" type="button" data-filter="红包物料" aria-pressed="false">红包物料 <b></b></button>
+        <button class="chip" type="button" data-filter="喜糖" aria-pressed="false">喜糖 <b></b></button>
+      </div>
+
+      <div class="timeline">
+        <div id="done" class="stage settled">
+          <h3>已落实</h3>
+          <ul>
+            <li>婚宴场地</li>
+            <li>婚庆及司仪</li>
+            <li>当天摄影</li>
+            <li>戒指</li>
+            <li>五金</li>
+            <li>彩礼</li>
+          </ul>
+        </div>
+
+        <div class="stage card is-pinned" data-stage>
+          <div class="stage-head">
+            <span>
+              <span class="stage-window">眼下</span>
+              <span id="first" class="stage-title">先办这两件事</span>
+            </span>
+            <span class="stage-count" hidden></span>
+          </div>
+          <ul class="task-list">
+            <li data-topic="现场流程">
+              <label class="task">
+                <input type="checkbox" data-task="banquet-timing">
+                <span>确定晚宴开席和预计散席时间<em class="tag">现场流程</em></span>
+              </label>
+              <p class="memo">跟幸福来临和司仪确认开席、预计散席，以及仪式开始时间。</p>
+            </li>
+            <li data-topic="亲友接待">
+              <label class="task">
+                <input type="checkbox" data-task="guest-driving-plan">
+                <span>按车确认女方亲友去留<em class="tag">亲友接待</em></span>
+              </label>
+              <p class="memo">发出预计散席时间，再问谁自驾返家、谁续住到 29 日。</p>
+              <p id="rooms" class="memo"><b>按车收回复</b>每车记联系人、同行人数和 27 日预计到达时间。分别登记 28 日宴后返家人数、续住人数和续住需要的房间及房型。同车有不同安排时分开记，待定的先单列。</p>
+            </li>
+          </ul>
+        </div>
+
+        <details class="stage card" data-stage data-end="2026-12-10" open>
+          <summary class="stage-head">
+            <span>
+              <span class="stage-window">11 月下旬至 12 月上旬 <em class="now" hidden>现在</em></span>
+              <span class="stage-title">约婚纱照、问住宿团房</span>
+            </span>
+            <span class="stage-count" hidden></span>
+            <span class="chev" aria-hidden="true"></span>
+          </summary>
+          <ul class="task-list">
+            <li data-topic="婚纱照">
+              <label class="task">
+                <input type="checkbox" data-task="photo-appointment">
+                <span>问上海婚纱摄影的可选周末、选片及交付时间。<em class="tag">婚纱照</em></span>
+              </label>
+            </li>
+            <li data-topic="亲友接待">
+              <label class="task">
+                <input type="checkbox" data-task="room-inquiry">
+                <span>女方家先收 27 日住房需求，男方家按婚宴合同地址问附近团房和停车。<em class="tag">亲友接待</em></span>
+              </label>
+              <p class="memo"><b>3 月 27 日下午入住</b>女方亲友约两桌，自驾到盐城。若实际住店 18–20 人且两人一间，可先按 9–10 间询价，再按家庭调整。</p>
+            </li>
+            <li data-topic="喜糖">
+              <label class="task">
+                <input type="checkbox" data-task="candy-scope">
+                <span>定喜糖预算和发法，问双方家里有没有要单独送的亲友。<em class="tag">喜糖</em></span>
+              </label>
+              <p id="candy" class="memo">先定每人一盒或每户一份，问酒店能否摆放。</p>
+            </li>
+            <li data-topic="红包物料">
+              <label class="task">
+                <input type="checkbox" data-task="small-supplies-shopping">
+                <span>先备红包袋和缺的应急小物，拿到婚庆用品清单后补缺项。<em class="tag">红包物料</em></span>
+              </label>
+              <p id="supplies" class="memo"><b>现在可以买</b>红包袋、标签贴和分装袋。应急包可补别针、针线包、衣服双面胶、纸巾、湿巾和创可贴。</p>
+              <p class="memo"><b>问婚庆后补买</b>按套餐缺项补签到笔、礼金登记本、收礼袋、桌卡、敬茶杯、茶叶和托盘。手捧花和胸花也先问婚庆。</p>
+            </li>
+          </ul>
+        </details>
+
+        <details class="stage card" data-stage data-end="2027-01-10" open>
+          <summary class="stage-head">
+            <span>
+              <span class="stage-window">12 月中旬至 1 月上旬 <em class="now" hidden>现在</em></span>
+              <span class="stage-title">拍婚纱照、试衣、初订客房</span>
+            </span>
+            <span class="stage-count" hidden></span>
+            <span class="chev" aria-hidden="true"></span>
+          </summary>
+          <ul class="task-list">
+            <li data-topic="婚纱照">
+              <label class="task">
+                <input type="checkbox" data-task="photo-shoot">
+                <span>挑一个周末拍婚纱照，留一个备选周末。<em class="tag">婚纱照</em></span>
+              </label>
+            </li>
+            <li data-topic="服装妆造">
+              <label class="task">
+                <input type="checkbox" data-task="wedding-attire-fitting">
+                <span>在上海约一天试婚礼当天穿的婚纱和男士西装。<em class="tag">服装妆造</em></span>
+              </label>
+              <p id="attire" class="memo">一起试主婚纱和男士西装，顺便决定是否准备敬酒服。试衣时搭配婚鞋、衬衫和皮鞋，看看整体效果。</p>
+            </li>
+            <li data-topic="亲友接待">
+              <label class="task">
+                <input type="checkbox" data-task="room-hold">
+                <span>按实际家庭需求初订 27 日的客房，记下最晚减房时间。<em class="tag">亲友接待</em></span>
+              </label>
+              <p class="memo">订房时问住宿停车位，也和幸福来临确认宴会厅停车入口。</p>
+            </li>
+            <li data-topic="亲友接待">
+              <label class="task">
+                <input type="checkbox" data-task="extension-hold">
+                <span>按第一轮去留统计问 28 日能留多少续住房，并确认房价和最晚锁房时间。<em class="tag">亲友接待</em></span>
+              </label>
+              <p class="memo"><b>3 月 28 日晚续住 · 29 日退房</b>按名单留房，问能否原房续住、是否含早及最晚确认时间。28 日退房的亲友可先寄存行李，晚宴后自驾返家。</p>
+            </li>
+          </ul>
+        </details>
+
+        <details class="stage card" data-stage data-end="2027-02-20" open>
+          <summary class="stage-head">
+            <span>
+              <span class="stage-window">1 月中下旬至春节前 <em class="now" hidden>现在</em></span>
+              <span class="stage-title">定服装和仪式流程</span>
+            </span>
+            <span class="stage-count" hidden></span>
+            <span class="chev" aria-hidden="true"></span>
+          </summary>
+          <ul class="task-list">
+            <li data-topic="婚纱照">
+              <label class="task">
+                <input type="checkbox" data-task="photo-selection">
+                <span>线上选片，确认精修照和迎宾海报什么时候拿得到。<em class="tag">婚纱照</em></span>
+              </label>
+            </li>
+            <li data-topic="服装妆造">
+              <label class="task">
+                <input type="checkbox" data-task="wedding-attire-reserve">
+                <span>定婚纱和西装的租买方式、款式和尺寸，约好复试或改衣。<em class="tag">服装妆造</em></span>
+              </label>
+              <p class="memo">确定租或买，问清改衣、复试、取衣时间。备齐头纱、衬衫、领带或领结、皮带等实际需要的配件。</p>
+            </li>
+            <li data-topic="服装妆造">
+              <label class="task">
+                <input type="checkbox" data-task="clothes-makeup">
+                <span>试婚鞋并确认跟妆安排。<em class="tag">服装妆造</em></span>
+              </label>
+            </li>
+            <li data-topic="现场流程">
+              <label class="task">
+                <input type="checkbox" data-task="family-plan">
+                <span>商量接风饭、接亲、敬茶、新娘出门地点和亲友接待分工。有需要再安排接亲用房。<em class="tag">现场流程</em></span>
+              </label>
+            </li>
+            <li data-topic="红包物料">
+              <label class="task">
+                <input type="checkbox" data-task="red-envelope-plan">
+                <span>估一下接亲和发给小朋友各需几份红包，和双方家里确认敬茶红包分工。<em class="tag">红包物料</em></span>
+              </label>
+            </li>
+          </ul>
+        </details>
+
+        <details class="stage card" data-stage data-end="2027-03-10" open>
+          <summary class="stage-head">
+            <span>
+              <span class="stage-window">2 月下旬至 3 月上旬 <em class="now" hidden>现在</em></span>
+              <span class="stage-title">集中回盐城确认现场、发请柬</span>
+            </span>
+            <span class="stage-count" hidden></span>
+            <span class="chev" aria-hidden="true"></span>
+          </summary>
+          <ul class="task-list">
+            <li data-topic="现场流程">
+              <label class="task">
+                <input type="checkbox" data-task="venue-walkthrough">
+                <span>约同一个周末试菜、看厅、和司仪过流程，核对开席与预计散席、布置、酒水和自备物料。<em class="tag">现场流程</em></span>
+              </label>
+            </li>
+            <li data-topic="现场流程">
+              <label class="task">
+                <input type="checkbox" data-task="photographer-plan">
+                <span>和已选摄影确认到场时间、地点和跟拍范围。如需录像，一并确认。<em class="tag">现场流程</em></span>
+              </label>
+            </li>
+            <li data-topic="亲友接待">
+              <label class="task">
+                <input type="checkbox" data-task="invites">
+                <span>按确定的晚宴时间发请柬、收出席回执，备好婚礼用的精修照和海报。<em class="tag">亲友接待</em></span>
+              </label>
+            </li>
+            <li data-topic="喜糖">
+              <label class="task">
+                <input type="checkbox" data-task="candy-order">
+                <span>婚前约 3–5 周，按两边初步人数下单喜糖。<em class="tag">喜糖</em></span>
+              </label>
+              <p class="memo">按发放人数或户数买喜糖、糖盒和伴手礼，加上另送的份数，再留约一成备用。</p>
+            </li>
+          </ul>
+        </details>
+
+        <details class="stage card" data-stage data-end="2027-03-28" open>
+          <summary class="stage-head">
+            <span>
+              <span class="stage-window">3 月中旬至婚前 <em class="now" hidden>现在</em></span>
+              <span class="stage-title">锁人数、取衣服、交接物料</span>
+            </span>
+            <span class="stage-count" hidden></span>
+            <span class="chev" aria-hidden="true"></span>
+          </summary>
+          <ul class="task-list">
+            <li data-topic="亲友接待">
+              <label class="task">
+                <input type="checkbox" data-task="guest-count">
+                <span>按酒店截止时间核对婚宴桌数、27 日房量、28 日续住房量和各车去留。<em class="tag">亲友接待</em></span>
+              </label>
+            </li>
+            <li data-topic="亲友接待">
+              <label class="task">
+                <input type="checkbox" data-task="guest-meals">
+                <span>核对四顿饭的人数和地点，单独安排 28 日午餐。<em class="tag">亲友接待</em></span>
+              </label>
+              <p class="memo">四顿分开统计人数，每顿的安排见<a href="#weekend">婚礼周末</a>。</p>
+            </li>
+            <li data-topic="亲友接待">
+              <label class="task">
+                <input type="checkbox" data-task="guest-info">
+                <span>把住宿、宴会厅、其他用餐地点和停车定位发给亲友，附上晚宴时间与本地联系人。<em class="tag">亲友接待</em></span>
+              </label>
+            </li>
+            <li data-topic="服装妆造">
+              <label class="task">
+                <input type="checkbox" data-task="wedding-attire-collection">
+                <span>完成婚纱和西装复试、改衣、取衣，确认谁带回盐城。租来的衣服记好归还日。<em class="tag">服装妆造</em></span>
+              </label>
+              <p class="memo">试一下坐下和走动是否方便。取衣后用衣袋收好，定谁带到盐城。租赁要约好归还时间。</p>
+            </li>
+            <li data-topic="红包物料">
+              <label class="task">
+                <input type="checkbox" data-task="red-envelope-pack">
+                <span>换好 10 元和 20 元纸币，装好小红包并交给当天负责的人。<em class="tag">红包物料</em></span>
+              </label>
+              <p class="memo">提前换 10 元和 20 元纸币，按接亲和小朋友人数装小红包，多备几份。敬茶或改口红包单独标好。</p>
+            </li>
+            <li data-topic="红包物料">
+              <label class="task">
+                <input type="checkbox" data-task="wedding-day-kit">
+                <span>核对敬茶和签到用品，把需要自备的物品和应急包提前装好。<em class="tag">红包物料</em></span>
+              </label>
+              <p class="memo">随身带戒指盒、平底鞋和充电宝。</p>
+            </li>
+            <li data-topic="现场流程">
+              <label class="task">
+                <input type="checkbox" data-task="handoff">
+                <span>清点喜糖、海报和戒指，定好物料交接、迎宾和带位的人。<em class="tag">现场流程</em></span>
+              </label>
+            </li>
+          </ul>
+        </details>
+      </div>
     </section>
 
-    <section class="overview" aria-label="筹备概览">
-      <article class="overview-item">
-        <h2><a class="overview-link" href="#schedule" aria-haspopup="dialog">筹备时间表 <span class="entry-action" aria-hidden="true">详情 ＋</span></a></h2>
-        <dl class="preview-list">
-          <dt>接下来几个周末</dt><dd>约婚纱照、问住宿团房</dd>
-          <dt>12 月中旬至 1 月上旬</dt><dd>拍照、试穿、初订客房</dd>
-        </dl>
-      </article>
-      <article class="overview-item">
-        <h2><a class="overview-link" href="#guests" aria-haspopup="dialog">亲友安排 <span class="entry-action" aria-hidden="true">详情 ＋</span></a></h2>
-        <dl class="preview-list">
-          <dt>自驾和住宿</dt><dd>女方亲友约两桌，27 日下午到盐城</dd>
-          <dt>用餐</dt><dd>四顿分开统计，28 日午餐单独订</dd>
-        </dl>
-      </article>
-      <article class="overview-item">
-        <h2><a class="overview-link" href="#preparations" aria-haspopup="dialog">服装与采购 <span class="entry-action" aria-hidden="true">详情 ＋</span></a></h2>
-        <dl class="preview-list">
-          <dt>先试穿</dt><dd>婚纱和男士西装，确定租买和尺寸</dd>
-          <dt>要准备</dt><dd>红包袋、10 元和 20 元纸币、喜糖</dd>
-        </dl>
-      </article>
-      <article class="overview-item">
-        <h2><a class="overview-link" href="#weekend" aria-haspopup="dialog">婚礼周末 <span class="entry-action" aria-hidden="true">详情 ＋</span></a></h2>
-        <dl class="preview-list">
-          <dt>3 月 27 日</dt><dd>下午入住，晚上接风饭</dd>
-          <dt>3 月 28 日</dt><dd>幸福来临晚宴，散席后返家或续住</dd>
-          <dt>3 月 29 日</dt><dd>续住亲友退房返程</dd>
-        </dl>
-      </article>
+    <section class="section" aria-labelledby="weekend">
+      <header class="sec-head">
+        <h2 id="weekend">婚礼周末</h2>
+        <p>女方亲友约两桌，27 日下午自驾到盐城</p>
+      </header>
+      <ol class="days">
+        <li class="day card">
+          <div class="day-date">
+            <p class="day-no">26<small>/27</small></p>
+            <p class="day-week">周五下班后<br>或周六上午</p>
+          </div>
+          <div class="day-body">
+            <h3>回盐城</h3>
+            <p>你们从上海回盐城。周六回的话，请家人先收物料、对接宴会厅。</p>
+          </div>
+        </li>
+        <li class="day card">
+          <div class="day-date">
+            <p class="day-no">27</p>
+            <p class="day-week">3 月 27 日 · 周六</p>
+          </div>
+          <div class="day-body">
+            <h3>亲友到达</h3>
+            <p>上午和司仪核对流程。下午女方亲友自驾到盐城、办入住，晚上按到达情况安排接风饭。</p>
+            <dl id="meals" class="meal-rows">
+              <div><dt>晚餐</dt><dd>在住宿酒店附近安排接风饭，按到达人数订，给晚到的亲友留餐。</dd></div>
+            </dl>
+          </div>
+        </li>
+        <li class="day card is-wedding">
+          <div class="day-date">
+            <p class="day-no">28</p>
+            <p class="day-week">3 月 28 日 · 周日</p>
+          </div>
+          <div class="day-body">
+            <h3>婚礼当天</h3>
+            <p>白天安排早餐和午餐。化妆、仪式、合影和签到按晚宴时间倒推。晚上在幸福来临办婚宴，散席后亲友按各车登记自驾返家或回酒店续住。</p>
+            <dl class="meal-rows">
+              <div><dt>早餐</dt><dd>优先选含早房型，确认早餐人数和供应时间。</dd></div>
+              <div><dt>午餐</dt><dd>单独订午餐，按中午留在盐城用餐的人数安排。</dd></div>
+              <div><dt>晚餐</dt><dd>幸福来临婚宴。开席和预计散席时间定下来后，跟自驾的亲友一起确认去留。</dd></div>
+            </dl>
+          </div>
+        </li>
+        <li class="day card">
+          <div class="day-date">
+            <p class="day-no">29</p>
+            <p class="day-week">3 月 29 日 · 周一</p>
+          </div>
+          <div class="day-body">
+            <h3>返程</h3>
+            <p>续住的亲友用早餐、退房后自行返程。</p>
+          </div>
+        </li>
+      </ol>
+      <p class="note">四顿分开统计人数。续住的亲友另外确认 29 日早餐。</p>
     </section>
 
     <footer class="page-footer">
@@ -192,299 +560,19 @@
           <output id="progress" class="progress"></output>
           <button id="copy-progress" class="copy-button" type="button">复制进度链接</button>
         </div>
+        <p class="hint">勾选记录存在这台设备的浏览器里。换设备或发给对方时，用进度链接带过去。</p>
         <p id="copy-result" class="copy-result" role="status"></p>
         <input id="progress-link" class="link-preview" type="url" aria-label="进度链接" readonly hidden>
       </div>
-      <p id="done" class="done"><strong>已落实</strong>婚宴场地、婚庆及司仪、当天摄影、戒指、五金和彩礼</p>
     </footer>
   </main>
 
-  <dialog class="panel" aria-labelledby="schedule" open>
-    <header class="panel-header">
-      <h2 id="schedule">筹备时间表</h2>
-      <form method="dialog" class="panel-close">
-        <button class="close-button" type="submit" aria-label="关闭筹备时间表" autofocus>×</button>
-      </form>
-    </header>
-    <div class="panel-body">
-      <div class="timeline">
-        <details class="stage">
-          <summary>
-            <span class="stage-window">11 月下旬至 12 月上旬</span>
-            <span class="stage-title">约婚纱照、问住宿团房</span>
-          </summary>
-          <ul class="task-list">
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="photo-appointment">
-                <span>问上海婚纱摄影的可选周末、选片及交付时间。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="room-inquiry">
-                <span>女方家先收 27 日住房需求，男方家按婚宴合同地址问附近团房和停车。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="candy-scope">
-                <span>定喜糖预算和发法，问双方家里有没有要单独送的亲友。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="small-supplies-shopping">
-                <span>先备红包袋和缺的应急小物，拿到婚庆用品清单后补缺项。</span>
-              </label>
-            </li>
-          </ul>
-        </details>
-        <details class="stage">
-          <summary>
-            <span class="stage-window">12 月中旬至 1 月上旬</span>
-            <span class="stage-title">拍婚纱照、试衣、初订客房</span>
-          </summary>
-          <ul class="task-list">
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="photo-shoot">
-                <span>挑一个周末拍婚纱照，留一个备选周末。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="wedding-attire-fitting">
-                <span>在上海约一天试婚礼当天穿的婚纱和男士西装。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="room-hold">
-                <span>按实际家庭需求初订 27 日的客房，记下最晚减房时间。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="extension-hold">
-                <span>按第一轮去留统计问 28 日能留多少续住房，并确认房价和最晚锁房时间。</span>
-              </label>
-            </li>
-          </ul>
-        </details>
-        <details class="stage">
-          <summary>
-            <span class="stage-window">1 月中下旬至春节前</span>
-            <span class="stage-title">定服装和仪式流程</span>
-          </summary>
-          <ul class="task-list">
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="photo-selection">
-                <span>线上选片，确认精修照和迎宾海报什么时候拿得到。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="wedding-attire-reserve">
-                <span>定婚纱和西装的租买方式、款式和尺寸，约好复试或改衣。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="clothes-makeup">
-                <span>试婚鞋并确认跟妆安排。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="family-plan">
-                <span>商量接风饭、接亲、敬茶、新娘出门地点和亲友接待分工。有需要再安排接亲用房。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="red-envelope-plan">
-                <span>估一下接亲和发给小朋友各需几份红包，和双方家里确认敬茶红包分工。</span>
-              </label>
-            </li>
-          </ul>
-        </details>
-        <details class="stage">
-          <summary>
-            <span class="stage-window">2 月下旬至 3 月上旬</span>
-            <span class="stage-title">集中回盐城确认现场、发请柬</span>
-          </summary>
-          <ul class="task-list">
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="venue-walkthrough">
-                <span>约同一个周末试菜、看厅、和司仪过流程，核对开席与预计散席、布置、酒水和自备物料。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="photographer-plan">
-                <span>和已选摄影确认到场时间、地点和跟拍范围。如需录像，一并确认。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="invites">
-                <span>按确定的晚宴时间发请柬、收出席回执，备好婚礼用的精修照和海报。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="candy-order">
-                <span>婚前约 3–5 周，按两边初步人数下单喜糖。</span>
-              </label>
-            </li>
-          </ul>
-        </details>
-        <details class="stage">
-          <summary>
-            <span class="stage-window">3 月中旬至婚前</span>
-            <span class="stage-title">锁人数、取衣服、交接物料</span>
-          </summary>
-          <ul class="task-list">
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="guest-count">
-                <span>按酒店截止时间核对婚宴桌数、27 日房量、28 日续住房量和各车去留。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="guest-meals">
-                <span>核对四顿饭的人数和地点，单独安排 28 日午餐。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="guest-info">
-                <span>把住宿、宴会厅、其他用餐地点和停车定位发给亲友，附上晚宴时间与本地联系人。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="wedding-attire-collection">
-                <span>完成婚纱和西装复试、改衣、取衣，确认谁带回盐城。租来的衣服记好归还日。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="red-envelope-pack">
-                <span>换好 10 元和 20 元纸币，装好小红包并交给当天负责的人。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="wedding-day-kit">
-                <span>核对敬茶和签到用品，把需要自备的物品和应急包提前装好。</span>
-              </label>
-            </li>
-            <li>
-              <label class="task">
-                <input type="checkbox" data-task="handoff">
-                <span>清点喜糖、海报和戒指，定好物料交接、迎宾和带位的人。</span>
-              </label>
-            </li>
-          </ul>
-        </details>
-      </div>
-    </div>
-  </dialog>
-
-  <dialog class="panel" aria-labelledby="guests" open>
-    <header class="panel-header">
-      <h2 id="guests">亲友安排</h2>
-      <form method="dialog" class="panel-close">
-        <button class="close-button" type="submit" aria-label="关闭亲友安排" autofocus>×</button>
-      </form>
-    </header>
-    <div class="panel-body">
-      <section class="panel-section" aria-labelledby="rooms">
-        <h3 id="rooms">自驾与住宿</h3>
-        <dl class="event-list">
-          <div>
-            <dt>按车收回复</dt>
-            <dd>每车记联系人、同行人数和 27 日预计到达时间。分别登记 28 日宴后返家人数、续住人数和续住需要的房间及房型。同车有不同安排时分开记，待定的先单列。</dd>
-          </div>
-          <div>
-            <dt>3 月 27 日下午入住</dt>
-            <dd>女方亲友约两桌，自驾到盐城。若实际住店 18–20 人且两人一间，可先按 9–10 间询价，再按家庭调整。</dd>
-          </div>
-          <div>
-            <dt>3 月 28 日晚续住 · 29 日退房</dt>
-            <dd>按名单留房，问能否原房续住、是否含早及最晚确认时间。28 日退房的亲友可先寄存行李，晚宴后自驾返家。</dd>
-          </div>
-        </dl>
-        <p class="note">订房时问住宿停车位，也和幸福来临确认宴会厅停车入口。</p>
-      </section>
-      <section class="panel-section" aria-labelledby="meals">
-        <h3 id="meals">四顿饭</h3>
-        <dl class="event-list">
-          <div><dt>3 月 27 日 · 晚餐</dt><dd>在住宿酒店附近安排接风饭，按到达人数订，给晚到的亲友留餐。</dd></div>
-          <div><dt>3 月 28 日 · 早餐</dt><dd>优先选含早房型，确认早餐人数和供应时间。</dd></div>
-          <div><dt>3 月 28 日 · 午餐</dt><dd>单独订午餐，按中午留在盐城用餐的人数安排。</dd></div>
-          <div><dt>3 月 28 日 · 晚餐</dt><dd>幸福来临婚宴。开席和预计散席时间定下来后，跟自驾的亲友一起确认去留。</dd></div>
-        </dl>
-        <p class="note">四顿分开统计人数。续住的亲友另外确认 29 日早餐。</p>
-      </section>
-    </div>
-  </dialog>
-
-  <dialog class="panel" aria-labelledby="preparations" open>
-    <header class="panel-header">
-      <h2 id="preparations">服装与采购</h2>
-      <form method="dialog" class="panel-close">
-        <button class="close-button" type="submit" aria-label="关闭服装与采购" autofocus>×</button>
-      </form>
-    </header>
-    <div class="panel-body">
-      <section class="panel-section" aria-labelledby="attire">
-        <h3 id="attire">婚纱和男士西装</h3>
-        <dl class="event-list">
-          <div><dt>挑有空的周末试穿</dt><dd>一起试主婚纱和男士西装，顺便决定是否准备敬酒服。试衣时搭配婚鞋、衬衫和皮鞋，看看整体效果。</dd></div>
-          <div><dt>春节前定下款式和尺寸</dt><dd>确定租或买，问清改衣、复试、取衣时间。备齐头纱、衬衫、领带或领结、皮带等实际需要的配件。</dd></div>
-          <div><dt>婚前复试和取衣</dt><dd>试一下坐下和走动是否方便。取衣后用衣袋收好，定谁带到盐城。租赁要约好归还时间。</dd></div>
-        </dl>
-      </section>
-      <section class="panel-section" aria-labelledby="supplies">
-        <h3 id="supplies">小件采购</h3>
-        <dl class="event-list">
-          <div><dt>现在可以买</dt><dd>红包袋、标签贴和分装袋。应急包可补别针、针线包、衣服双面胶、纸巾、湿巾和创可贴。</dd></div>
-          <div><dt>问婚庆后补买</dt><dd>按套餐缺项补签到笔、礼金登记本、收礼袋、桌卡、敬茶杯、茶叶和托盘。手捧花和胸花也先问婚庆。</dd></div>
-          <div><dt>婚前换零钱、把小件装好</dt><dd>提前换 10 元和 20 元纸币，按接亲和小朋友人数装小红包，多备几份。敬茶或改口红包单独标好。随身带戒指盒、平底鞋和充电宝。</dd></div>
-        </dl>
-        <div class="subcard">
-          <h3 id="candy">喜糖和伴手礼</h3>
-          <p>先定每人一盒或每户一份，问酒店能否摆放。按发放人数或户数买喜糖、糖盒和伴手礼，加上另送的份数，再留约一成备用。</p>
-        </div>
-      </section>
-    </div>
-  </dialog>
-
-  <dialog class="panel" aria-labelledby="weekend" open>
-    <header class="panel-header">
-      <h2 id="weekend">婚礼周末</h2>
-      <form method="dialog" class="panel-close">
-        <button class="close-button" type="submit" aria-label="关闭婚礼周末" autofocus>×</button>
-      </form>
-    </header>
-    <div class="panel-body">
-      <dl class="event-list">
-        <div><dt>周五下班后或周六上午</dt><dd>你们从上海回盐城。周六回的话，请家人先收物料、对接宴会厅。</dd></div>
-        <div><dt>3 月 27 日（周六）</dt><dd>上午和司仪核对流程。下午女方亲友自驾到盐城、办入住，晚上按到达情况安排接风饭。</dd></div>
-        <div><dt>3 月 28 日（周日）</dt><dd>白天安排早餐和午餐。化妆、仪式、合影和签到按晚宴时间倒推。晚上在幸福来临办婚宴，散席后亲友按各车登记自驾返家或回酒店续住。</dd></div>
-        <div><dt>3 月 29 日（周一）</dt><dd>续住的亲友用早餐、退房后自行返程。</dd></div>
-      </dl>
-    </div>
-  </dialog>
-
   <script>
     const tasks = Array.from(document.querySelectorAll('[data-task]'));
+    const items = Array.from(document.querySelectorAll('[data-topic]'));
+    const stages = Array.from(document.querySelectorAll('[data-stage]'));
+    const foldable = stages.filter(stage => stage.tagName === 'DETAILS');
+    const chips = Array.from(document.querySelectorAll('[data-filter]'));
     const progress = document.querySelector('#progress');
     const progressTools = document.querySelector('#progress-tools');
     const copyProgress = document.querySelector('#copy-progress');
@@ -495,6 +583,30 @@
     function updateProgress() {
       const completed = tasks.filter(task => task.checked);
       progress.textContent = `已勾选 ${completed.length} / ${tasks.length} 项`;
+      document.querySelector('#done-count').textContent = completed.length;
+      document.querySelector('#total-count').textContent = tasks.length;
+      document.querySelector('#meter-fill').style.width = `${completed.length / tasks.length * 100}%`;
+
+      // 每个阶段的计数：筛选时只数筛出来的那几条
+      for (const stage of stages) {
+        const all = Array.from(stage.querySelectorAll('[data-task]'));
+        const shown = all.filter(box => !box.closest('[data-topic]').hidden);
+        const done = shown.filter(box => box.checked).length;
+        const count = stage.querySelector('.stage-count');
+        count.textContent = `${done} / ${shown.length}`;
+        count.setAttribute('aria-label', `已办 ${done} 项，共 ${shown.length} 项`);
+        count.hidden = false;
+        stage.classList.toggle('is-done', all.every(box => box.checked));
+      }
+
+      // 每个事项还剩几条
+      for (const chip of chips) {
+        const badge = chip.querySelector('b');
+        if (!badge) continue;
+        const left = items.filter(item => item.dataset.topic === chip.dataset.filter && !item.querySelector('[data-task]').checked).length;
+        badge.textContent = left || '✓';
+        badge.setAttribute('aria-label', left ? `还剩 ${left} 项` : '已办完');
+      }
       return completed.map(task => task.dataset.task);
     }
 
@@ -555,52 +667,71 @@
         progressLink.select();
       }
     });
-    if (typeof HTMLDialogElement !== 'undefined' && HTMLDialogElement.prototype.showModal) {
-      const panels = document.querySelectorAll('dialog.panel');
-      let activePanel = null;
 
-      function syncPanelToHash() {
-        const heading = document.getElementById(location.hash.slice(1));
-        const panel = heading?.closest('dialog.panel') ?? null;
-
-        if (activePanel && activePanel !== panel) {
-          const previousPanel = activePanel;
-          activePanel = null;
-          previousPanel.close();
-        }
-
-        if (!panel) return;
-        if (!panel.open) {
-          activePanel = panel;
-          panel.showModal();
-          panel.scrollTop = 0;
-        }
-        if (heading.id !== panel.getAttribute('aria-labelledby')) {
-          heading.scrollIntoView({ block: 'start' });
-        }
-      }
-
-      for (const panel of panels) {
-        panel.removeAttribute('open');
-        panel.addEventListener('close', () => {
-          if (activePanel !== panel) return;
-          activePanel = null;
-          const url = new URL(location.href);
-          url.hash = '';
-          history.replaceState(history.state, '', url);
-        });
-        panel.addEventListener('click', event => {
-          if (event.target !== panel) return;
-          const { top, right, bottom, left } = panel.getBoundingClientRect();
-          if (event.clientX < left || event.clientX > right || event.clientY < top || event.clientY > bottom) {
-            panel.close();
-          }
-        });
-      }
-
-      window.addEventListener('hashchange', syncPanelToHash);
-      syncPanelToHash();
+    // 倒计时
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const daysLeft = Math.round((new Date(2027, 2, 28) - today) / 864e5);
+    const countdown = document.querySelector('#countdown');
+    const countdownLabel = document.querySelector('#countdown-label');
+    const countdownUnit = document.querySelector('#countdown-unit');
+    if (daysLeft > 0) {
+      countdown.textContent = daysLeft;
+    } else if (daysLeft === 0) {
+      countdownLabel.textContent = '婚礼';
+      countdown.textContent = '今天';
+      countdownUnit.hidden = true;
+    } else {
+      countdownLabel.textContent = '婚礼已过';
+      countdown.textContent = -daysLeft;
     }
+    document.querySelector('#stats').hidden = false;
+
+    // 标出当前阶段，默认只展开它
+    const pad = n => String(n).padStart(2, '0');
+    const todayKey = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+    const currentStage = foldable.find(stage => stage.dataset.end >= todayKey);
+    const toggleStages = document.querySelector('#toggle-stages');
+    const linkedStage = location.hash.length > 1 ? document.getElementById(location.hash.slice(1))?.closest('details') : null;
+
+    function openDefault() {
+      for (const stage of foldable) stage.open = !currentStage || stage === currentStage || stage === linkedStage;
+    }
+    function syncToggleLabel() {
+      toggleStages.textContent = foldable.every(stage => stage.open) ? '全部收起' : '全部展开';
+    }
+    if (currentStage) {
+      currentStage.classList.add('is-current');
+      currentStage.querySelector('.now').hidden = false;
+    }
+    openDefault();
+    for (const stage of foldable) stage.addEventListener('toggle', syncToggleLabel);
+    toggleStages.addEventListener('click', () => {
+      const open = !foldable.every(stage => stage.open);
+      for (const stage of foldable) stage.open = open;
+    });
+    syncToggleLabel();
+    toggleStages.hidden = false;
+    window.addEventListener('beforeprint', () => { for (const stage of foldable) stage.open = true; });
+
+    // 按事项筛选：同一事项跨阶段的待办排在一起看
+    function applyFilter(topic) {
+      for (const chip of chips) chip.setAttribute('aria-pressed', String(chip.dataset.filter === topic));
+      for (const item of items) item.hidden = topic !== '' && item.dataset.topic !== topic;
+      for (const stage of stages) {
+        stage.hidden = !stage.querySelector('[data-topic]:not([hidden])');
+        if (topic !== '' && stage.tagName === 'DETAILS') stage.open = true;
+      }
+      if (topic === '') openDefault();
+      updateProgress();
+    }
+    for (const chip of chips) {
+      chip.addEventListener('click', () => {
+        applyFilter(chip.getAttribute('aria-pressed') === 'true' ? '' : chip.dataset.filter);
+        chip.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      });
+    }
+    document.querySelector('#filters').hidden = false;
   </script>
 </body>
 </html>
