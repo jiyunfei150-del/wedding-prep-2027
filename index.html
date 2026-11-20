@@ -4,18 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#f8f4ef">
+  <meta name="theme-color" content="#fcf9f7">
   <title>婚礼筹备清单</title>
   <style>
     :root {
       color-scheme: light;
-      --paper: #f8f4ef;
-      --surface: #fffdfa;
-      --ink: #2c2123;
-      --muted: #67575a;
-      --wine: #7c3046;
-      --rose: #efdee0;
-      --line: #e7d9d6;
+      --paper: #fcf9f7;
+      --ink: #302426;
+      --muted: #69585b;
+      --wine: #792d43;
+      --line: #e5d8d5;
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
       line-height: 1.65;
       background: var(--paper);
@@ -24,155 +22,158 @@
 
     *, *::before, *::after { box-sizing: border-box; }
     body { margin: 0; }
+    body:has(dialog:modal) { overflow: hidden; }
     h1, h2, h3, p, ul, dl { margin: 0; }
     a { color: var(--wine); }
     :where(a, button, input, summary):focus-visible {
-      outline: 3px solid var(--wine);
-      outline-offset: 3px;
+      outline: 2px solid var(--wine);
+      outline-offset: 4px;
     }
 
-    .shell { width: min(58rem, calc(100% - 2.5rem)); margin-inline: auto; }
-    .skip { position: absolute; top: .5rem; left: .5rem; z-index: 1; padding: .5rem 1rem; background: var(--surface); transform: translateY(-150%); }
+    .shell { width: min(44rem, calc(100% - 2.5rem)); margin-inline: auto; }
+    .skip { position: absolute; top: .75rem; left: .75rem; z-index: 2; padding: .45rem .6rem; background: var(--paper); transform: translateY(-175%); }
     .skip:focus { transform: none; }
-    .top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: .25rem 1.5rem; padding-block: .85rem; }
-    .brand { color: var(--wine); font-weight: 700; text-decoration: none; white-space: nowrap; }
-    nav { display: flex; flex-wrap: wrap; gap: .125rem 1.05rem; }
-    nav a { padding: .25rem 0; font-size: .9375rem; text-decoration: none; }
-    nav a:hover { text-decoration: underline; text-underline-offset: .2em; }
-
-    .hero { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem 2rem; padding: clamp(1.35rem, 4vw, 2.4rem); background: linear-gradient(115deg, #f5e9e9, var(--rose)); border: 1px solid #e7cbd0; border-radius: 1.3rem; }
+    .intro { padding-top: clamp(2rem, 6vw, 4.3rem); }
+    .date { display: block; color: var(--wine); font-weight: 650; }
     h1, h2 { font-family: "Songti SC", SimSun, "Noto Serif CJK SC", serif; }
-    h1 { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.25; }
-    .venue { margin-top: .4rem; color: var(--wine); font-weight: 650; }
-    .date { display: flex; align-items: baseline; flex-wrap: wrap; gap: .45rem .6rem; color: var(--wine); }
-    .date strong { font: 400 clamp(1.9rem, 5vw, 3.45rem)/1 Georgia, "Times New Roman", serif; }
-    .date span { font-size: .9375rem; }
-    .done { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; margin-top: .7rem; color: #365745; font-size: .9375rem; }
-    .done ul { display: flex; flex-wrap: wrap; gap: .15rem .6rem; padding: 0; list-style: none; }
-    .done li { padding-inline: .38rem; border-radius: .3rem; background: #e7eee4; }
-    .section { margin-block: 1.7rem 2.25rem; }
-    .section-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .25rem 1rem; margin-bottom: .65rem; }
-    h2 { font-size: clamp(1.55rem, 3.5vw, 1.95rem); line-height: 1.35; }
-    h3 { font-size: 1.12rem; line-height: 1.4; }
+    h1 { margin-top: .35rem; font-size: clamp(2.45rem, 7vw, 4rem); line-height: 1.2; }
+    h2 { font-size: 1.435rem; line-height: 1.4; }
+    h3 { font-size: 1.125rem; line-height: 1.45; }
+    .venue { margin-top: .45rem; color: var(--muted); }
 
-    .priority { padding: clamp(.9rem, 3.2vw, 1.3rem); background: #f7ecec; border: 1px solid #e6cacc; border-radius: 1rem; }
-    .priority h2 { margin-bottom: .6rem; }
-    .priority-grid, .detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
-    .priority-item { padding: .7rem .9rem; background: var(--surface); border: 1px solid var(--line); border-radius: .7rem; }
-    .priority-item p { margin: .15rem 0 .25rem 1.675rem; color: var(--muted); }
-    .priority-item a { text-underline-offset: .15em; }
-
-    .progress { color: var(--wine); font-size: .9rem; font-weight: 700; }
-    .progress-tools { margin-bottom: .85rem; }
-    .progress-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .75rem; }
-    .copy-button { padding: .4rem .7rem; border: 1px solid #bf8f98; border-radius: .45rem; background: var(--surface); color: var(--wine); cursor: pointer; font: inherit; font-weight: 650; }
-    .copy-button:hover { background: var(--rose); }
-    .progress-tip, .copy-result { color: var(--muted); font-size: .875rem; }
-    .copy-result:not(:empty) { margin-top: .35rem; }
-    .link-preview { width: 100%; margin-top: .35rem; padding: .5rem; border: 1px solid var(--line); border-radius: .4rem; color: var(--ink); background: var(--surface); font: inherit; }
-
-    .timeline { display: grid; gap: .5rem; }
-    .stage, .card { background: var(--surface); border: 1px solid var(--line); border-radius: .85rem; }
-    .stage summary { padding: .72rem .95rem; cursor: pointer; }
-    .stage summary::marker { color: var(--wine); }
-    .stage summary:hover { color: var(--wine); }
-    .stage-window { display: inline-block; min-width: 10.5rem; color: var(--wine); font-size: .9375rem; }
-    .stage-title { font-weight: 700; overflow-wrap: anywhere; }
-    .task-list { margin: 0 .95rem .5rem; padding: .15rem 0 0; border-top: 1px solid var(--line); list-style: none; }
-    .task-list li + li { border-top: 1px solid var(--line); }
-    .task { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: .55rem; padding: .5rem 0; cursor: pointer; }
-    .task input { width: 1.125rem; height: 1.125rem; margin: .23rem 0 0; accent-color: var(--wine); }
+    .priority { margin-block: 1.95rem 1.5rem; }
+    .priority-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem 1.4rem; margin-top: .3rem; padding: 0; list-style: none; }
+    .priority-grid p { padding-left: 1.625rem; color: var(--muted); }
+    .task { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: .5rem; padding: .36rem 0; cursor: pointer; }
+    .task input { width: 1.125rem; height: 1.125rem; margin: .24rem 0 0; accent-color: var(--wine); }
     .task input:checked + span { color: var(--muted); text-decoration: line-through; }
 
-    .card { padding: 1rem 1.05rem; }
-    .card h3 { margin-bottom: .65rem; }
-    .card p + p { margin-top: .5rem; }
-    .card .note { margin-top: .65rem; color: var(--muted); }
-    .event-list > div + div { margin-top: .6rem; }
+    .menu { border-top: 1px solid var(--line); }
+    .menu ul { padding: 0; list-style: none; }
+    .menu li { border-bottom: 1px solid var(--line); }
+    .menu a { display: grid; grid-template-columns: minmax(0, 1fr) 1.35rem; align-items: center; gap: .5rem; padding: .68rem .15rem; color: var(--ink); text-decoration: none; }
+    .menu a:hover strong { color: var(--wine); }
+    .menu a::after { content: "+"; color: var(--wine); font: 400 1.55rem/1 Georgia, serif; text-align: center; }
+    .menu-copy { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0 1rem; }
+    .menu-copy span { color: var(--muted); font-size: .9375rem; }
+
+    .page-footer { padding-block: 1rem 2.25rem; }
+    .progress-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .9rem; }
+    .progress { color: var(--muted); font-size: .9375rem; }
+    .copy-button { display: inline-block; min-height: 2.25rem; padding: .2rem 0; border: 0; background: transparent; color: var(--wine); cursor: pointer; font: inherit; font-weight: 650; text-decoration: underline; text-underline-offset: .2em; }
+    .copy-result { color: var(--muted); font-size: .9rem; }
+    .copy-result:not(:empty) { margin-top: .3rem; }
+    .link-preview { width: 100%; margin-top: .35rem; padding: .45rem; border: 1px solid var(--line); border-radius: .3rem; color: var(--ink); background: white; font: inherit; }
+    .done { margin-top: .5rem; color: var(--muted); font-size: .9rem; }
+    .done strong { margin-right: .35rem; color: var(--ink); }
+
+    .panel { width: min(41rem, calc(100% - 1.75rem)); max-width: none; max-height: 86dvh; padding: 0; overflow: auto; border: 0; border-radius: .9rem; background: var(--paper); color: var(--ink); box-shadow: 0 1rem 4.5rem #35222544; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #b89ba1 transparent; }
+    .panel::backdrop { background: #33262a77; }
+    .panel:not(:modal) { position: static; max-height: none; margin: 1rem auto; box-shadow: none; }
+    .panel-header { position: sticky; top: 0; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: .75rem; padding: .78rem 1.25rem; border-bottom: 1px solid var(--line); background: var(--paper); }
+    .panel:not(:modal) .panel-close { display: none; }
+    .close-button { display: grid; place-items: center; width: 2.65rem; height: 2.65rem; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--wine); cursor: pointer; font: 400 1.65rem/1 Georgia, serif; }
+    .close-button:hover { background: #f2e8e6; }
+    .panel-body { padding: .75rem 1.25rem 1.35rem; }
+    .panel [id] { scroll-margin-top: 4.75rem; }
+
+    .stage + .stage { border-top: 1px solid var(--line); }
+    .stage summary { padding: .67rem 0; cursor: pointer; }
+    .stage summary::marker { color: var(--wine); }
+    .stage-window { display: inline-block; min-width: 10rem; margin-right: .35rem; color: var(--wine); font-size: .9375rem; }
+    .stage-title { font-weight: 700; overflow-wrap: anywhere; }
+    .task-list { margin: 0 0 .6rem; padding: 0 0 0 .9rem; list-style: none; }
+    .task-list .task { padding: .45rem 0; }
+
+    .panel-section { padding-block: .35rem; }
+    .panel-section + .panel-section { margin-top: .75rem; padding-top: .9rem; border-top: 1px solid var(--line); }
+    .panel-section h3 { margin-bottom: .55rem; }
+    .event-list > div + div { margin-top: .7rem; }
     .event-list dt { color: var(--wine); font-weight: 700; }
     .event-list dd { margin: .1rem 0 0; }
+    .note { margin-top: .65rem; color: var(--muted); }
     .subcard { margin-top: .85rem; padding-top: .8rem; border-top: 1px solid var(--line); }
     .subcard h3 { margin-bottom: .3rem; }
 
-    @media (max-width: 38rem) {
-      .shell { width: calc(100% - 1.5rem); }
-      nav { gap: .125rem .7rem; }
-      .priority-grid, .detail-grid { grid-template-columns: minmax(0, 1fr); }
-      .section { margin-block: 1.35rem 1.7rem; }
-      .stage-window { min-width: 0; margin-right: .4rem; }
+    @media (max-width: 35rem) {
+      .shell { width: calc(100% - 2rem); }
+      .priority { margin-block: 1.45rem 1.2rem; }
+      .priority-grid { grid-template-columns: minmax(0, 1fr); }
+      .menu-copy { justify-content: flex-start; }
+      .panel-header { padding-inline: .9rem; }
+      .panel-body { padding-inline: .9rem; }
+      .stage-window { min-width: 0; }
     }
 
     @media print {
-      :root, .hero, .priority, .card { background: white; }
-      .top, .skip, .progress-tools { display: none; }
-      .shell { width: 100%; }
-      .priority, .stage, .card { break-inside: avoid; }
+      :root, .panel, .panel-header { background: white; }
+      .skip, .menu, .progress-tools, .panel-close, .panel::backdrop { display: none; }
+      .panel, .panel:modal { position: static; display: block; width: 100%; max-height: none; overflow: visible; margin: 0 0 1rem; box-shadow: none; }
+      .panel-header { position: static; padding-top: 0; }
       .stage::details-content { display: block; content-visibility: visible; }
+      .intro { padding-top: 0; }
     }
   </style>
 </head>
 <body>
   <a class="skip" href="#first">跳到先办的事</a>
-  <header class="shell top">
-    <a class="brand" href="#page-title">盐城 · 2027</a>
-    <nav aria-label="页面导航">
-      <a href="#schedule">筹备时间表</a>
-      <a href="#guests">亲友安排</a>
-      <a href="#preparations">服装与采购</a>
-      <a href="#weekend">婚礼周末</a>
-    </nav>
-  </header>
-
   <main class="shell">
-    <header class="hero">
-      <div>
-        <h1 id="page-title">婚礼筹备清单</h1>
-        <p class="venue">盐城幸福来临酒店 · 晚宴</p>
-      </div>
-      <time class="date" datetime="2027-03-28" aria-label="2027 年 3 月 28 日星期日">
-        <span>2027</span><strong>03.28</strong><span>星期日</span>
-      </time>
+    <header class="intro">
+      <time class="date" datetime="2027-03-28">2027 年 3 月 28 日 · 周日晚宴</time>
+      <h1 id="page-title">婚礼筹备清单</h1>
+      <p class="venue">盐城幸福来临酒店</p>
     </header>
-    <div class="done" id="done">
-      <strong>已落实</strong>
-      <ul>
-        <li>婚宴场地</li><li>婚庆及司仪</li><li>当天摄影</li><li>戒指</li><li>五金</li><li>彩礼</li>
-      </ul>
-    </div>
 
-    <section class="section priority" aria-labelledby="first">
+    <section class="priority" aria-labelledby="first">
       <h2 id="first">先办这两件事</h2>
-      <div class="priority-grid">
-        <article class="priority-item">
+      <ul class="priority-grid">
+        <li>
           <label class="task">
             <input type="checkbox" data-task="banquet-timing">
-            <span><strong>定晚宴开席和预计散席时间</strong></span>
+            <span><strong>确定晚宴开席和预计散席时间</strong></span>
           </label>
-          <p>先跟幸福来临和司仪定下 3 月 28 日几点开席、预计几点结束。仪式如果早于开席，也把仪式时间记下来。</p>
-        </article>
-        <article class="priority-item">
+          <p>跟幸福来临和司仪确认开席、预计散席，以及仪式开始时间。</p>
+        </li>
+        <li>
           <label class="task">
             <input type="checkbox" data-task="guest-driving-plan">
-            <span><strong>按车盘清楚女方亲友去留</strong></span>
+            <span><strong>按车确认女方亲友去留</strong></span>
           </label>
-          <p>把预计散席时间告诉亲友，按车收一轮回复，统计哪些人饭后自驾回家、哪些人续住到 29 日。<a href="#rooms">看要登记哪些信息</a></p>
-        </article>
-      </div>
+          <p>发出预计散席时间，再问谁自驾返家、谁续住到 29 日。<a href="#rooms" aria-haspopup="dialog">看登记项</a></p>
+        </li>
+      </ul>
     </section>
 
-    <section class="section" aria-labelledby="schedule">
-      <div class="section-top">
-        <h2 id="schedule">筹备时间表</h2>
-        <output id="progress" class="progress"></output>
-      </div>
+    <nav class="menu" aria-label="筹备内容">
+      <ul>
+        <li><a href="#schedule" aria-haspopup="dialog"><span class="menu-copy"><strong>筹备时间表</strong><span>各阶段待办</span></span></a></li>
+        <li><a href="#guests" aria-haspopup="dialog"><span class="menu-copy"><strong>亲友安排</strong><span>四顿饭、自驾和续住</span></span></a></li>
+        <li><a href="#preparations" aria-haspopup="dialog"><span class="menu-copy"><strong>服装与采购</strong><span>婚纱西装、红包和喜糖</span></span></a></li>
+        <li><a href="#weekend" aria-haspopup="dialog"><span class="menu-copy"><strong>婚礼周末</strong><span>3 月 27–29 日安排</span></span></a></li>
+      </ul>
+    </nav>
+
+    <footer class="page-footer">
       <div id="progress-tools" class="progress-tools" hidden>
         <div class="progress-controls">
+          <output id="progress" class="progress"></output>
           <button id="copy-progress" class="copy-button" type="button">复制进度链接</button>
-          <p class="progress-tip">更新后复制最新链接，换设备也可恢复。</p>
         </div>
         <p id="copy-result" class="copy-result" role="status"></p>
         <input id="progress-link" class="link-preview" type="url" aria-label="进度链接" readonly hidden>
       </div>
+      <p id="done" class="done"><strong>已落实</strong>婚宴场地、婚庆及司仪、当天摄影、戒指、五金和彩礼</p>
+    </footer>
+  </main>
+
+  <dialog class="panel" aria-labelledby="schedule" open>
+    <header class="panel-header">
+      <h2 id="schedule">筹备时间表</h2>
+      <form method="dialog" class="panel-close">
+        <button class="close-button" type="submit" aria-label="关闭筹备时间表" autofocus>×</button>
+      </form>
+    </header>
+    <div class="panel-body">
       <div class="timeline">
         <details class="stage">
           <summary>
@@ -359,83 +360,95 @@
           </ul>
         </details>
       </div>
-    </section>
+    </div>
+  </dialog>
 
-    <section class="section" aria-labelledby="guests">
-      <div class="section-top"><h2 id="guests">亲友安排</h2></div>
-      <div class="detail-grid">
-        <section class="card" aria-labelledby="rooms">
-          <h3 id="rooms">自驾与住宿</h3>
-          <dl class="event-list">
-            <div>
-              <dt>按车收回复</dt>
-              <dd>每车记联系人、同行人数和 27 日预计到达时间。分别登记 28 日宴后返家人数、续住人数和续住需要的房间及房型。同车有不同安排时分开记，待定的先单列。</dd>
-            </div>
-            <div>
-              <dt>3 月 27 日下午入住</dt>
-              <dd>女方亲友约两桌，自驾到盐城。若实际住店 18–20 人且两人一间，可先按 9–10 间询价，再按家庭调整。</dd>
-            </div>
-            <div>
-              <dt>3 月 28 日晚续住 · 29 日退房</dt>
-              <dd>按名单留房，问能否原房续住、是否含早及最晚确认时间。28 日退房的亲友可先寄存行李，晚宴后自驾返家。</dd>
-            </div>
-          </dl>
-          <p class="note">订房时问住宿停车位，也和幸福来临确认宴会厅停车入口。</p>
-        </section>
-
-        <section class="card" aria-labelledby="meals">
-          <h3 id="meals">四顿饭</h3>
-          <dl class="event-list">
-            <div><dt>3 月 27 日 · 晚餐</dt><dd>在住宿酒店附近安排接风饭，按到达人数订，给晚到的亲友留餐。</dd></div>
-            <div><dt>3 月 28 日 · 早餐</dt><dd>优先选含早房型，确认早餐人数和供应时间。</dd></div>
-            <div><dt>3 月 28 日 · 午餐</dt><dd>单独订午餐，按中午留在盐城用餐的人数安排。</dd></div>
-            <div><dt>3 月 28 日 · 晚餐</dt><dd>幸福来临婚宴。开席和预计散席时间定下来后，跟自驾的亲友一起确认去留。</dd></div>
-          </dl>
-          <p class="note">四顿分开统计人数。续住的亲友另外确认 29 日早餐。</p>
-        </section>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="preparations">
-      <div class="section-top"><h2 id="preparations">服装与采购</h2></div>
-      <div class="detail-grid">
-        <section class="card" aria-labelledby="attire">
-          <h3 id="attire">婚纱和男士西装</h3>
-          <dl class="event-list">
-            <div><dt>挑有空的周末试穿</dt><dd>一起试主婚纱和男士西装，顺便决定是否准备敬酒服。试衣时搭配婚鞋、衬衫和皮鞋，看看整体效果。</dd></div>
-            <div><dt>春节前定下款式和尺寸</dt><dd>确定租或买，问清改衣、复试、取衣时间。备齐头纱、衬衫、领带或领结、皮带等实际需要的配件。</dd></div>
-            <div><dt>婚前复试和取衣</dt><dd>试一下坐下和走动是否方便。取衣后用衣袋收好，定谁带到盐城。租赁要约好归还时间。</dd></div>
-          </dl>
-        </section>
-
-        <section class="card" aria-labelledby="supplies">
-          <h3 id="supplies">小件采购</h3>
-          <dl class="event-list">
-            <div><dt>现在可以买</dt><dd>红包袋、标签贴和分装袋。应急包可补别针、针线包、衣服双面胶、纸巾、湿巾和创可贴。</dd></div>
-            <div><dt>问婚庆后补买</dt><dd>按套餐缺项补签到笔、礼金登记本、收礼袋、桌卡、敬茶杯、茶叶和托盘。手捧花和胸花也先问婚庆。</dd></div>
-            <div><dt>婚前换零钱、把小件装好</dt><dd>提前换 10 元和 20 元纸币，按接亲和小朋友人数装小红包，多备几份。敬茶或改口红包单独标好。随身带戒指盒、平底鞋和充电宝。</dd></div>
-          </dl>
-          <div class="subcard">
-            <h3 id="candy">喜糖和伴手礼</h3>
-            <p>先定每人一盒或每户一份，问酒店能否摆放。按发放人数或户数买喜糖、糖盒和伴手礼，加上另送的份数，再留约一成备用。</p>
-          </div>
-        </section>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="weekend">
-      <div class="section-top"><h2 id="weekend">婚礼周末</h2></div>
-      <div class="card">
+  <dialog class="panel" aria-labelledby="guests" open>
+    <header class="panel-header">
+      <h2 id="guests">亲友安排</h2>
+      <form method="dialog" class="panel-close">
+        <button class="close-button" type="submit" aria-label="关闭亲友安排" autofocus>×</button>
+      </form>
+    </header>
+    <div class="panel-body">
+      <section class="panel-section" aria-labelledby="rooms">
+        <h3 id="rooms">自驾与住宿</h3>
         <dl class="event-list">
-          <div><dt>周五下班后或周六上午</dt><dd>你们从上海回盐城。周六回的话，请家人先收物料、对接宴会厅。</dd></div>
-          <div><dt>3 月 27 日（周六）</dt><dd>上午和司仪核对流程。下午女方亲友自驾到盐城、办入住，晚上按到达情况安排接风饭。</dd></div>
-          <div><dt>3 月 28 日（周日）</dt><dd>白天安排早餐和午餐。化妆、仪式、合影和签到按晚宴时间倒推。晚上在幸福来临办婚宴，散席后亲友按各车登记自驾返家或回酒店续住。</dd></div>
-          <div><dt>3 月 29 日（周一）</dt><dd>续住的亲友用早餐、退房后自行返程。</dd></div>
+          <div>
+            <dt>按车收回复</dt>
+            <dd>每车记联系人、同行人数和 27 日预计到达时间。分别登记 28 日宴后返家人数、续住人数和续住需要的房间及房型。同车有不同安排时分开记，待定的先单列。</dd>
+          </div>
+          <div>
+            <dt>3 月 27 日下午入住</dt>
+            <dd>女方亲友约两桌，自驾到盐城。若实际住店 18–20 人且两人一间，可先按 9–10 间询价，再按家庭调整。</dd>
+          </div>
+          <div>
+            <dt>3 月 28 日晚续住 · 29 日退房</dt>
+            <dd>按名单留房，问能否原房续住、是否含早及最晚确认时间。28 日退房的亲友可先寄存行李，晚宴后自驾返家。</dd>
+          </div>
         </dl>
-      </div>
-    </section>
-  </main>
+        <p class="note">订房时问住宿停车位，也和幸福来临确认宴会厅停车入口。</p>
+      </section>
+      <section class="panel-section" aria-labelledby="meals">
+        <h3 id="meals">四顿饭</h3>
+        <dl class="event-list">
+          <div><dt>3 月 27 日 · 晚餐</dt><dd>在住宿酒店附近安排接风饭，按到达人数订，给晚到的亲友留餐。</dd></div>
+          <div><dt>3 月 28 日 · 早餐</dt><dd>优先选含早房型，确认早餐人数和供应时间。</dd></div>
+          <div><dt>3 月 28 日 · 午餐</dt><dd>单独订午餐，按中午留在盐城用餐的人数安排。</dd></div>
+          <div><dt>3 月 28 日 · 晚餐</dt><dd>幸福来临婚宴。开席和预计散席时间定下来后，跟自驾的亲友一起确认去留。</dd></div>
+        </dl>
+        <p class="note">四顿分开统计人数。续住的亲友另外确认 29 日早餐。</p>
+      </section>
+    </div>
+  </dialog>
 
+  <dialog class="panel" aria-labelledby="preparations" open>
+    <header class="panel-header">
+      <h2 id="preparations">服装与采购</h2>
+      <form method="dialog" class="panel-close">
+        <button class="close-button" type="submit" aria-label="关闭服装与采购" autofocus>×</button>
+      </form>
+    </header>
+    <div class="panel-body">
+      <section class="panel-section" aria-labelledby="attire">
+        <h3 id="attire">婚纱和男士西装</h3>
+        <dl class="event-list">
+          <div><dt>挑有空的周末试穿</dt><dd>一起试主婚纱和男士西装，顺便决定是否准备敬酒服。试衣时搭配婚鞋、衬衫和皮鞋，看看整体效果。</dd></div>
+          <div><dt>春节前定下款式和尺寸</dt><dd>确定租或买，问清改衣、复试、取衣时间。备齐头纱、衬衫、领带或领结、皮带等实际需要的配件。</dd></div>
+          <div><dt>婚前复试和取衣</dt><dd>试一下坐下和走动是否方便。取衣后用衣袋收好，定谁带到盐城。租赁要约好归还时间。</dd></div>
+        </dl>
+      </section>
+      <section class="panel-section" aria-labelledby="supplies">
+        <h3 id="supplies">小件采购</h3>
+        <dl class="event-list">
+          <div><dt>现在可以买</dt><dd>红包袋、标签贴和分装袋。应急包可补别针、针线包、衣服双面胶、纸巾、湿巾和创可贴。</dd></div>
+          <div><dt>问婚庆后补买</dt><dd>按套餐缺项补签到笔、礼金登记本、收礼袋、桌卡、敬茶杯、茶叶和托盘。手捧花和胸花也先问婚庆。</dd></div>
+          <div><dt>婚前换零钱、把小件装好</dt><dd>提前换 10 元和 20 元纸币，按接亲和小朋友人数装小红包，多备几份。敬茶或改口红包单独标好。随身带戒指盒、平底鞋和充电宝。</dd></div>
+        </dl>
+        <div class="subcard">
+          <h3 id="candy">喜糖和伴手礼</h3>
+          <p>先定每人一盒或每户一份，问酒店能否摆放。按发放人数或户数买喜糖、糖盒和伴手礼，加上另送的份数，再留约一成备用。</p>
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog class="panel" aria-labelledby="weekend" open>
+    <header class="panel-header">
+      <h2 id="weekend">婚礼周末</h2>
+      <form method="dialog" class="panel-close">
+        <button class="close-button" type="submit" aria-label="关闭婚礼周末" autofocus>×</button>
+      </form>
+    </header>
+    <div class="panel-body">
+      <dl class="event-list">
+        <div><dt>周五下班后或周六上午</dt><dd>你们从上海回盐城。周六回的话，请家人先收物料、对接宴会厅。</dd></div>
+        <div><dt>3 月 27 日（周六）</dt><dd>上午和司仪核对流程。下午女方亲友自驾到盐城、办入住，晚上按到达情况安排接风饭。</dd></div>
+        <div><dt>3 月 28 日（周日）</dt><dd>白天安排早餐和午餐。化妆、仪式、合影和签到按晚宴时间倒推。晚上在幸福来临办婚宴，散席后亲友按各车登记自驾返家或回酒店续住。</dd></div>
+        <div><dt>3 月 29 日（周一）</dt><dd>续住的亲友用早餐、退房后自行返程。</dd></div>
+      </dl>
+    </div>
+  </dialog>
 
   <script>
     const tasks = Array.from(document.querySelectorAll('[data-task]'));
@@ -509,6 +522,52 @@
         progressLink.select();
       }
     });
+    if (typeof HTMLDialogElement !== 'undefined' && HTMLDialogElement.prototype.showModal) {
+      const panels = document.querySelectorAll('dialog.panel');
+      let activePanel = null;
+
+      function syncPanelToHash() {
+        const heading = document.getElementById(location.hash.slice(1));
+        const panel = heading?.closest('dialog.panel') ?? null;
+
+        if (activePanel && activePanel !== panel) {
+          const previousPanel = activePanel;
+          activePanel = null;
+          previousPanel.close();
+        }
+
+        if (!panel) return;
+        if (!panel.open) {
+          activePanel = panel;
+          panel.showModal();
+          panel.scrollTop = 0;
+        }
+        if (heading.id !== panel.getAttribute('aria-labelledby')) {
+          heading.scrollIntoView({ block: 'start' });
+        }
+      }
+
+      for (const panel of panels) {
+        panel.removeAttribute('open');
+        panel.addEventListener('close', () => {
+          if (activePanel !== panel) return;
+          activePanel = null;
+          const url = new URL(location.href);
+          url.hash = '';
+          history.replaceState(history.state, '', url);
+        });
+        panel.addEventListener('click', event => {
+          if (event.target !== panel) return;
+          const { top, right, bottom, left } = panel.getBoundingClientRect();
+          if (event.clientX < left || event.clientX > right || event.clientY < top || event.clientY > bottom) {
+            panel.close();
+          }
+        });
+      }
+
+      window.addEventListener('hashchange', syncPanelToHash);
+      syncPanelToHash();
+    }
   </script>
 </body>
 </html>
