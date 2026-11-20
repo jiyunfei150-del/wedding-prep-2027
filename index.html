@@ -27,7 +27,7 @@
     body { margin: 0; }
     h1, h2, h3, p, ul, ol { margin: 0; }
     a { color: var(--wine); }
-    a:focus-visible, input:focus-visible {
+    a:focus-visible, button:focus-visible, input:focus-visible {
       outline: 3px solid var(--wine);
       outline-offset: 3px;
     }
@@ -55,6 +55,13 @@
     .section-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .15rem 1rem; margin-bottom: .8rem; }
     h2 { font-size: clamp(1.5rem, 3vw, 1.9rem); line-height: 1.35; }
     .progress { color: var(--wine); font-size: .9rem; font-weight: 700; }
+    .progress-tools { margin-bottom: .9rem; }
+    .progress-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .8rem; }
+    .copy-button { padding: .45rem .7rem; border: 1px solid #bf8f98; border-radius: .45rem; background: var(--surface); color: var(--wine); cursor: pointer; font: inherit; font-weight: 650; }
+    .copy-button:hover { background: var(--rose); }
+    .progress-tip, .copy-result { color: var(--muted); font-size: .875rem; }
+    .copy-result { margin-top: .35rem; }
+    .link-preview { width: 100%; margin-top: .35rem; padding: .5rem; border: 1px solid var(--line); border-radius: .4rem; color: var(--ink); background: var(--surface); font: inherit; }
     .timeline, .task-list, .done-list { padding: 0; list-style: none; }
     .timeline { display: grid; gap: .8rem; }
     .stage, .side-card { background: var(--surface); border: 1px solid var(--line); border-radius: 1.1rem; }
@@ -67,7 +74,6 @@
     .task { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: .55rem; padding: .55rem 0; cursor: pointer; }
     .task input { width: 1.125rem; height: 1.125rem; margin: .24rem 0 0; accent-color: var(--wine); }
     .task input:checked + span { color: var(--muted); text-decoration: line-through; }
-    .storage-note { margin: .65rem 0 0; color: var(--muted); font-size: .875rem; }
 
     aside { display: grid; gap: .85rem; }
     .side-card { padding: 1.05rem 1.15rem; }
@@ -80,10 +86,11 @@
     .done-list li { padding: .22rem .55rem; border-radius: .45rem; color: var(--green); background: #e4ece2; font-size: .9375rem; }
     .weekend { margin-top: 1.45rem; }
     .weekend h2 { margin-bottom: .65rem; }
-    .weekend dl { margin: 0; }
-    .weekend dt { color: var(--wine); font-weight: 700; }
-    .weekend dd { margin: .1rem 0 .65rem; }
-    .weekend dd:last-child { margin-bottom: 0; }
+    .event-list { margin: 0; }
+    .event-list dt { color: var(--wine); font-weight: 700; }
+    .event-list dd { margin: .1rem 0 .65rem; }
+    .event-list dd:last-child { margin-bottom: 0; }
+    .side-card .event-list { margin-bottom: .75rem; }
 
     @media (max-width: 52rem) {
       .layout { grid-template-columns: minmax(0, 1fr); }
@@ -104,7 +111,7 @@
 
     @media print {
       :root, .hero, .stage, .side-card { background: white; }
-      .top, .skip, .storage-note { display: none; }
+      .top, .skip, .progress-tools { display: none; }
       .shell { width: 100%; }
       .layout { display: block; }
       .hero, .stage, .side-card { break-inside: avoid; }
@@ -119,6 +126,7 @@
     <nav aria-label="页面导航">
       <a href="#schedule">筹备时间表</a>
       <a href="#rooms">亲友住宿</a>
+      <a href="#meals">亲友用餐</a>
       <a href="#candy">喜糖</a>
       <a href="#weekend">婚礼周末</a>
     </nav>
@@ -143,7 +151,15 @@
         <section aria-labelledby="schedule">
           <div class="section-top">
             <h2 id="schedule">筹备时间表</h2>
-            <output id="progress" class="progress" aria-live="polite"></output>
+            <output id="progress" class="progress"></output>
+          </div>
+          <div id="progress-tools" class="progress-tools" hidden>
+            <div class="progress-controls">
+              <button id="copy-progress" class="copy-button" type="button">复制进度链接</button>
+              <p class="progress-tip">打开保存的链接可恢复当时的勾选。每次更新后重新复制。</p>
+            </div>
+            <p id="copy-result" class="copy-result" role="status"></p>
+            <input id="progress-link" class="link-preview" type="url" aria-label="进度链接" readonly hidden>
           </div>
           <ol class="timeline">
             <li class="stage">
@@ -161,6 +177,7 @@
               <ul class="task-list">
                 <li><label class="task"><input type="checkbox" data-task="photo-shoot"><span>挑一个有空的周末拍婚纱照，留一个备选周末。</span></label></li>
                 <li><label class="task"><input type="checkbox" data-task="room-hold"><span>按大床、双床和单住房需求初订客房，记下最晚减房时间。</span></label></li>
+                <li><label class="task"><input type="checkbox" data-task="extension-hold"><span>问酒店能否先留 3 月 28 日晚的续住房，记下房价和最晚确认时间。</span></label></li>
               </ul>
             </li>
             <li class="stage">
@@ -169,7 +186,7 @@
               <ul class="task-list">
                 <li><label class="task"><input type="checkbox" data-task="photo-selection"><span>线上选片，确认婚礼要用的精修照和迎宾海报什么时候能拿到。</span></label></li>
                 <li><label class="task"><input type="checkbox" data-task="clothes-makeup"><span>试穿礼服和婚鞋，确认跟妆安排。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="family-plan"><span>和父母商量接风饭、接亲、敬茶和新娘出门地点。有需要再安排婚车和接亲用房。</span></label></li>
+                <li><label class="task"><input type="checkbox" data-task="family-plan"><span>和父母商量接风饭、接亲、敬茶和新娘出门地点，定一位亲友用餐联系人。有需要再安排婚车和接亲用房。</span></label></li>
               </ul>
             </li>
             <li class="stage">
@@ -186,24 +203,26 @@
               <p class="window">3 月中旬至婚前一周</p>
               <h3>锁定房量与桌数、交接物料</h3>
               <ul class="task-list">
-                <li><label class="task"><input type="checkbox" data-task="guest-count"><span>按酒店约定的截止时间确认房量、桌数、接风饭人数，以及接站、续住需求。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="guest-info"><span>给亲友发住宿酒店和宴会厅的两个定位、入住方式和本地联系人。</span></label></li>
+                <li><label class="task"><input type="checkbox" data-task="guest-count"><span>按酒店约定的截止时间确认 27 日住房、28 日续住、婚宴桌数和接站需求。</span></label></li>
+                <li><label class="task"><input type="checkbox" data-task="guest-meals"><span>分开核对 27 日晚餐和 28 日三餐的人数，确认各餐地点和集合方式。</span></label></li>
+                <li><label class="task"><input type="checkbox" data-task="guest-info"><span>给亲友发住宿、宴会厅和其他用餐地点的定位，以及入住方式和本地联系人。</span></label></li>
                 <li><label class="task"><input type="checkbox" data-task="handoff"><span>清点喜糖和海报，确认由谁带戒指、交接物料、迎宾和带位。</span></label></li>
               </ul>
             </li>
           </ol>
-          <p id="storage-note" class="storage-note" hidden>勾选记录保存在当前浏览器。</p>
         </section>
 
         <section class="stage weekend" aria-labelledby="weekend">
           <h2 id="weekend">婚礼周末</h2>
-          <dl>
+          <dl class="event-list">
             <dt>周五下班后或周六上午</dt>
             <dd>从上海回盐城。周六回的话，请当地家人先收物料、对接宴会厅。</dd>
             <dt>3 月 27 日（周六）下午</dt>
-            <dd>女方亲友自行到盐城，由当地联系人协助入住。若安排接风饭，按到齐时间订。</dd>
+            <dd>女方亲友自行到盐城，由当地联系人协助入住。晚餐按亲友到达情况安排。</dd>
             <dt>3 月 28 日（周日）</dt>
-            <dd>按开席时间倒推化妆、仪式、合影和签到。按午宴或晚宴安排退房、行李寄存、续住和返程。</dd>
+            <dd>按开席时间倒推化妆、仪式、合影和签到。由亲友联系人协调当天三餐、行李寄存和续住。</dd>
+            <dt>3 月 29 日（周一）</dt>
+            <dd>如有亲友续住，提前确认早餐、退房和返程安排。</dd>
           </dl>
         </section>
       </div>
@@ -217,9 +236,23 @@
         </section>
         <section class="side-card" aria-labelledby="rooms">
           <h2 id="rooms">亲友住宿</h2>
-          <p><strong>3 月 27 日入住，28 日退房。</strong>女方亲友约两桌。若实际有 18–20 人住宿、两人一间，先按 9–10 间询价，再按家庭调整房型。</p>
-          <p>问团房价、早餐、退房和行李寄存。能退的机动房可留 1–2 间，多住一晚的人单独登记。</p>
+          <p><strong>3 月 27 日入住。</strong>女方亲友约两桌。若实际有 18–20 人住宿、两人一间，先按 9–10 间询价，再按家庭调整房型。</p>
+          <p><strong>3 月 28 日晚可续住，29 日退房。</strong>预订时问能否原房续住、续住房价、早餐和最晚确认时间。28 日退房的人可以先寄存行李，再按用餐和返程时间取走。</p>
           <p>一人收房型和到达信息，一人在盐城对接酒店。婚宴地点以合同上的门店和宴会厅为准。</p>
+        </section>
+        <section class="side-card" aria-labelledby="meals">
+          <h2 id="meals">亲友用餐</h2>
+          <dl class="event-list">
+            <dt>3 月 27 日 · 晚餐</dt>
+            <dd>在住宿酒店附近安排接风饭，按实际到达人数订位，给晚到的亲友留餐。</dd>
+            <dt>3 月 28 日 · 早餐</dt>
+            <dd>优先订含早的房型，确认早餐份数和供应时间。</dd>
+            <dt>3 月 28 日 · 午餐</dt>
+            <dd>若婚宴在中午，这顿由幸福来临安排。若婚宴在晚上，另订午餐。</dd>
+            <dt>3 月 28 日 · 晚餐</dt>
+            <dd>若婚宴在晚上，这顿由幸福来临安排。若婚宴在中午，按晚上还在盐城用餐的人数另订。</dd>
+          </dl>
+          <p>按家庭记每顿参加的人数和是否续住。午餐、晚餐各算各的，方便按返程计划订位。</p>
         </section>
         <section class="side-card" aria-labelledby="candy">
           <h2 id="candy">喜糖待准备</h2>
@@ -233,7 +266,10 @@
   <script>
     const tasks = Array.from(document.querySelectorAll('[data-task]'));
     const progress = document.querySelector('#progress');
-    const storageNote = document.querySelector('#storage-note');
+    const progressTools = document.querySelector('#progress-tools');
+    const copyProgress = document.querySelector('#copy-progress');
+    const copyResult = document.querySelector('#copy-result');
+    const progressLink = document.querySelector('#progress-link');
     const storageKey = 'wedding-prep-2027-tasks';
 
     function updateProgress() {
@@ -242,29 +278,63 @@
       return completed.map(task => task.dataset.task);
     }
 
-    try {
-      const savedTasks = JSON.parse(localStorage.getItem(storageKey));
-      if (Array.isArray(savedTasks)) {
-        const completed = new Set(savedTasks);
-        for (const task of tasks) task.checked = completed.has(task.dataset.task);
+    function restoreProgress() {
+      const fromLink = new URL(location.href).searchParams.get('done');
+      if (fromLink !== null) return fromLink.split(',');
+
+      try {
+        const stored = JSON.parse(localStorage.getItem(storageKey));
+        return Array.isArray(stored) ? stored : [];
+      } catch {
+        return [];
       }
-      storageNote.hidden = false;
-    } catch {
-      storageNote.hidden = true;
     }
 
+    function linkWithProgress(completed) {
+      const url = new URL(location.href);
+      url.searchParams.set('done', completed.join(','));
+      return url;
+    }
+
+    const restored = new Set(restoreProgress());
+    for (const task of tasks) task.checked = restored.has(task.dataset.task);
     updateProgress();
+    progressTools.hidden = false;
+
     for (const task of tasks) {
       task.addEventListener('change', () => {
         const completed = updateProgress();
+        copyResult.textContent = '';
+        progressLink.hidden = true;
+        try {
+          history.replaceState(history.state, '', linkWithProgress(completed));
+        } catch {
+          // The copy button still works in an embedded browser that blocks URL changes.
+        }
         try {
           localStorage.setItem(storageKey, JSON.stringify(completed));
-          storageNote.hidden = false;
         } catch {
-          storageNote.hidden = true;
+          // A saved link restores progress even when browser storage is unavailable.
         }
       });
     }
+
+    copyProgress.addEventListener('click', async () => {
+      const url = linkWithProgress(updateProgress());
+      url.hash = '';
+
+      try {
+        await navigator.clipboard.writeText(url.href);
+        progressLink.hidden = true;
+        copyResult.textContent = '进度链接已复制。可以发给对方或存到备忘录。';
+      } catch {
+        copyResult.textContent = '请手动复制下面的链接。';
+        progressLink.value = url.href;
+        progressLink.hidden = false;
+        progressLink.focus();
+        progressLink.select();
+      }
+    });
   </script>
 </body>
 </html>
