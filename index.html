@@ -12,11 +12,10 @@
       --paper: #f8f4ef;
       --surface: #fffdfa;
       --ink: #2c2123;
-      --muted: #69565a;
+      --muted: #67575a;
       --wine: #7c3046;
       --rose: #efdee0;
       --line: #e7d9d6;
-      --green: #365745;
       font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
       line-height: 1.65;
       background: var(--paper);
@@ -25,261 +24,418 @@
 
     *, *::before, *::after { box-sizing: border-box; }
     body { margin: 0; }
-    h1, h2, h3, p, ul, ol { margin: 0; }
+    h1, h2, h3, p, ul, dl { margin: 0; }
     a { color: var(--wine); }
-    a:focus-visible, button:focus-visible, input:focus-visible {
+    :where(a, button, input, summary):focus-visible {
       outline: 3px solid var(--wine);
       outline-offset: 3px;
     }
 
-    .shell { width: min(100% - 3rem, 69rem); margin-inline: auto; }
-    .skip { position: absolute; top: .5rem; left: .5rem; z-index: 2; padding: .5rem 1rem; background: var(--surface); transform: translateY(-150%); }
+    .shell { width: min(58rem, calc(100% - 2.5rem)); margin-inline: auto; }
+    .skip { position: absolute; top: .5rem; left: .5rem; z-index: 1; padding: .5rem 1rem; background: var(--surface); transform: translateY(-150%); }
     .skip:focus { transform: none; }
-    .top { display: flex; justify-content: space-between; align-items: center; gap: .75rem 1.5rem; padding-block: 1.1rem; }
-    .brand { color: var(--wine); font-weight: 700; letter-spacing: .08em; }
-    nav { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
-    nav a { display: inline-block; padding: .25rem 0; font-size: .9375rem; text-decoration: none; }
+    .top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: .25rem 1.5rem; padding-block: .85rem; }
+    .brand { color: var(--wine); font-weight: 700; text-decoration: none; white-space: nowrap; }
+    nav { display: flex; flex-wrap: wrap; gap: .125rem 1.05rem; }
+    nav a { padding: .25rem 0; font-size: .9375rem; text-decoration: none; }
     nav a:hover { text-decoration: underline; text-underline-offset: .2em; }
 
-    .hero { position: relative; overflow: hidden; isolation: isolate; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 1.5rem 3rem; padding: clamp(1.5rem, 5vw, 3.25rem); background: var(--rose); border: 1px solid #e7cbd0; border-radius: 1.5rem; }
-    .hero::before { position: absolute; inset: 0; z-index: -1; background: linear-gradient(112deg, #f5e7e8, transparent 66%); content: ""; }
+    .hero { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .75rem 2rem; padding: clamp(1.35rem, 4vw, 2.4rem); background: linear-gradient(115deg, #f5e9e9, var(--rose)); border: 1px solid #e7cbd0; border-radius: 1.3rem; }
     h1, h2 { font-family: "Songti SC", SimSun, "Noto Serif CJK SC", serif; }
-    h1 { font-size: clamp(2.25rem, 6vw, 3.55rem); line-height: 1.25; letter-spacing: -.015em; }
-    .venue { margin-top: .5rem; color: var(--wine); font-weight: 650; }
-    .hero-note { max-width: 32rem; margin-top: 1.1rem; color: var(--muted); }
-    .date { display: grid; justify-items: center; width: min(14rem, 100%); padding: .95rem 1.3rem; color: var(--wine); border: 1px solid #bf8f98; border-radius: 5rem; background: #fbf2f1; line-height: 1.25; }
-    .date strong { font: 400 clamp(2.4rem, 5vw, 4rem)/1.1 Georgia, "Times New Roman", serif; letter-spacing: -.055em; }
+    h1 { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.25; }
+    .venue { margin-top: .4rem; color: var(--wine); font-weight: 650; }
+    .date { display: flex; align-items: baseline; flex-wrap: wrap; gap: .45rem .6rem; color: var(--wine); }
+    .date strong { font: 400 clamp(1.9rem, 5vw, 3.45rem)/1 Georgia, "Times New Roman", serif; }
     .date span { font-size: .9375rem; }
+    .done { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; margin-top: .7rem; color: #365745; font-size: .9375rem; }
+    .done ul { display: flex; flex-wrap: wrap; gap: .15rem .6rem; padding: 0; list-style: none; }
+    .done li { padding-inline: .38rem; border-radius: .3rem; background: #e7eee4; }
+    .section { margin-block: 1.7rem 2.25rem; }
+    .section-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .25rem 1rem; margin-bottom: .65rem; }
+    h2 { font-size: clamp(1.55rem, 3.5vw, 1.95rem); line-height: 1.35; }
+    h3 { font-size: 1.12rem; line-height: 1.4; }
 
-    .layout { display: grid; grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr); align-items: start; gap: 1.75rem; margin-block: 1.9rem 2.5rem; }
-    .section-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: .15rem 1rem; margin-bottom: .8rem; }
-    h2 { font-size: clamp(1.5rem, 3vw, 1.9rem); line-height: 1.35; }
+    .priority { padding: clamp(.9rem, 3.2vw, 1.3rem); background: #f7ecec; border: 1px solid #e6cacc; border-radius: 1rem; }
+    .priority h2 { margin-bottom: .6rem; }
+    .priority-grid, .detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+    .priority-item { padding: .7rem .9rem; background: var(--surface); border: 1px solid var(--line); border-radius: .7rem; }
+    .priority-item p { margin: .15rem 0 .25rem 1.675rem; color: var(--muted); }
+    .priority-item a { text-underline-offset: .15em; }
+
     .progress { color: var(--wine); font-size: .9rem; font-weight: 700; }
-    .progress-tools { margin-bottom: .9rem; }
-    .progress-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .8rem; }
-    .copy-button { padding: .45rem .7rem; border: 1px solid #bf8f98; border-radius: .45rem; background: var(--surface); color: var(--wine); cursor: pointer; font: inherit; font-weight: 650; }
+    .progress-tools { margin-bottom: .85rem; }
+    .progress-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .75rem; }
+    .copy-button { padding: .4rem .7rem; border: 1px solid #bf8f98; border-radius: .45rem; background: var(--surface); color: var(--wine); cursor: pointer; font: inherit; font-weight: 650; }
     .copy-button:hover { background: var(--rose); }
     .progress-tip, .copy-result { color: var(--muted); font-size: .875rem; }
-    .copy-result { margin-top: .35rem; }
+    .copy-result:not(:empty) { margin-top: .35rem; }
     .link-preview { width: 100%; margin-top: .35rem; padding: .5rem; border: 1px solid var(--line); border-radius: .4rem; color: var(--ink); background: var(--surface); font: inherit; }
-    .timeline, .task-list, .done-list { padding: 0; list-style: none; }
-    .timeline { display: grid; gap: .8rem; }
-    .stage, .side-card { background: var(--surface); border: 1px solid var(--line); border-radius: 1.1rem; }
-    .stage { padding: 1rem 1.15rem; }
-    .stage:first-child { border-top: 3px solid var(--wine); }
-    .window { color: var(--wine); font-size: .9375rem; font-weight: 700; }
-    .stage h3 { margin-top: .1rem; font-size: 1.12rem; line-height: 1.45; }
-    .task-list { margin-top: .65rem; }
+
+    .timeline { display: grid; gap: .5rem; }
+    .stage, .card { background: var(--surface); border: 1px solid var(--line); border-radius: .85rem; }
+    .stage summary { padding: .72rem .95rem; cursor: pointer; }
+    .stage summary::marker { color: var(--wine); }
+    .stage summary:hover { color: var(--wine); }
+    .stage-window { display: inline-block; min-width: 10.5rem; color: var(--wine); font-size: .9375rem; }
+    .stage-title { font-weight: 700; overflow-wrap: anywhere; }
+    .task-list { margin: 0 .95rem .5rem; padding: .15rem 0 0; border-top: 1px solid var(--line); list-style: none; }
     .task-list li + li { border-top: 1px solid var(--line); }
-    .task { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: .55rem; padding: .55rem 0; cursor: pointer; }
-    .task input { width: 1.125rem; height: 1.125rem; margin: .24rem 0 0; accent-color: var(--wine); }
+    .task { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: .55rem; padding: .5rem 0; cursor: pointer; }
+    .task input { width: 1.125rem; height: 1.125rem; margin: .23rem 0 0; accent-color: var(--wine); }
     .task input:checked + span { color: var(--muted); text-decoration: line-through; }
 
-    aside { display: grid; gap: .85rem; }
-    .side-card { padding: 1.05rem 1.15rem; }
-    .side-card h2 { font-size: 1.4rem; margin-bottom: .6rem; }
-    .side-card p { color: var(--muted); }
-    .side-card p + p { margin-top: .55rem; }
-    .done { background: #f1f4ef; border-color: #d9e3d8; }
-    .done h2 { color: var(--green); }
-    .done-list { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .done-list li { padding: .22rem .55rem; border-radius: .45rem; color: var(--green); background: #e4ece2; font-size: .9375rem; }
-    .weekend { margin-top: 1.45rem; }
-    .weekend h2 { margin-bottom: .65rem; }
-    .event-list { margin: 0; }
+    .card { padding: 1rem 1.05rem; }
+    .card h3 { margin-bottom: .65rem; }
+    .card p + p { margin-top: .5rem; }
+    .card .note { margin-top: .65rem; color: var(--muted); }
+    .event-list > div + div { margin-top: .6rem; }
     .event-list dt { color: var(--wine); font-weight: 700; }
-    .event-list dd { margin: .1rem 0 .65rem; }
-    .event-list dd:last-child { margin-bottom: 0; }
-    .side-card .event-list { margin-bottom: .75rem; }
+    .event-list dd { margin: .1rem 0 0; }
+    .subcard { margin-top: .85rem; padding-top: .8rem; border-top: 1px solid var(--line); }
+    .subcard h3 { margin-bottom: .3rem; }
 
-    @media (max-width: 52rem) {
-      .layout { grid-template-columns: minmax(0, 1fr); }
-      aside { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .done { grid-column: 1 / -1; }
-    }
-
-    @media (max-width: 35rem) {
+    @media (max-width: 38rem) {
       .shell { width: calc(100% - 1.5rem); }
-      .top { align-items: flex-start; flex-direction: column; gap: .25rem; padding-block: .7rem; }
-      .hero { grid-template-columns: 1fr; gap: .8rem; border-radius: 1.15rem; }
-      .hero-note { margin-top: .65rem; }
-      .date { display: flex; justify-content: flex-start; align-items: baseline; width: fit-content; gap: .45rem; padding: .45rem .75rem; }
-      .date strong { font-size: 1.65rem; }
-      .layout { gap: 1rem; margin-top: 1.15rem; }
-      aside { grid-template-columns: minmax(0, 1fr); }
+      nav { gap: .125rem .7rem; }
+      .priority-grid, .detail-grid { grid-template-columns: minmax(0, 1fr); }
+      .section { margin-block: 1.35rem 1.7rem; }
+      .stage-window { min-width: 0; margin-right: .4rem; }
     }
 
     @media print {
-      :root, .hero, .stage, .side-card { background: white; }
+      :root, .hero, .priority, .card { background: white; }
       .top, .skip, .progress-tools { display: none; }
       .shell { width: 100%; }
-      .layout { display: block; }
-      .hero, .stage, .side-card { break-inside: avoid; }
-      aside { margin-top: 1rem; }
+      .priority, .stage, .card { break-inside: avoid; }
+      .stage::details-content { display: block; content-visibility: visible; }
     }
   </style>
 </head>
 <body>
-  <a class="skip" href="#schedule">跳到筹备时间表</a>
+  <a class="skip" href="#first">跳到先办的事</a>
   <header class="shell top">
-    <span class="brand">盐城 · 2027</span>
+    <a class="brand" href="#page-title">盐城 · 2027</a>
     <nav aria-label="页面导航">
       <a href="#schedule">筹备时间表</a>
-      <a href="#rooms">亲友住宿</a>
-      <a href="#meals">亲友用餐</a>
-      <a href="#candy">喜糖</a>
-      <a href="#supplies">小件采购</a>
+      <a href="#guests">亲友安排</a>
+      <a href="#preparations">服装与采购</a>
       <a href="#weekend">婚礼周末</a>
     </nav>
   </header>
 
   <main class="shell">
-    <section class="hero" aria-labelledby="page-title">
+    <header class="hero">
       <div>
         <h1 id="page-title">婚礼筹备清单</h1>
-        <p class="venue">盐城幸福来临酒店</p>
-        <p class="hero-note">在每个时间范围里挑有空的周末。婚纱照可以在上海拍，盐城现场事项集中到一次回去办理。</p>
+        <p class="venue">盐城幸福来临酒店 · 晚宴</p>
       </div>
-      <time class="date" datetime="2027-03-28" aria-label="2027年3月28日星期日">
-        <span>2027</span>
-        <strong>03.28</strong>
-        <span>星期日</span>
+      <time class="date" datetime="2027-03-28" aria-label="2027 年 3 月 28 日星期日">
+        <span>2027</span><strong>03.28</strong><span>星期日</span>
       </time>
+    </header>
+    <div class="done" id="done">
+      <strong>已落实</strong>
+      <ul>
+        <li>婚宴场地</li><li>婚庆及司仪</li><li>当天摄影</li><li>戒指</li><li>五金</li><li>彩礼</li>
+      </ul>
+    </div>
+
+    <section class="section priority" aria-labelledby="first">
+      <h2 id="first">先办这两件事</h2>
+      <div class="priority-grid">
+        <article class="priority-item">
+          <label class="task">
+            <input type="checkbox" data-task="banquet-timing">
+            <span><strong>定晚宴开席和预计散席时间</strong></span>
+          </label>
+          <p>先跟幸福来临和司仪定下 3 月 28 日几点开席、预计几点结束。仪式如果早于开席，也把仪式时间记下来。</p>
+        </article>
+        <article class="priority-item">
+          <label class="task">
+            <input type="checkbox" data-task="guest-driving-plan">
+            <span><strong>按车盘清楚女方亲友去留</strong></span>
+          </label>
+          <p>把预计散席时间告诉亲友，按车收一轮回复，统计哪些人饭后自驾回家、哪些人续住到 29 日。<a href="#rooms">看要登记哪些信息</a></p>
+        </article>
+      </div>
     </section>
 
-    <div class="layout">
-      <div>
-        <section aria-labelledby="schedule">
-          <div class="section-top">
-            <h2 id="schedule">筹备时间表</h2>
-            <output id="progress" class="progress"></output>
-          </div>
-          <div id="progress-tools" class="progress-tools" hidden>
-            <div class="progress-controls">
-              <button id="copy-progress" class="copy-button" type="button">复制进度链接</button>
-              <p class="progress-tip">打开保存的链接可恢复当时的勾选。每次更新后重新复制。</p>
+    <section class="section" aria-labelledby="schedule">
+      <div class="section-top">
+        <h2 id="schedule">筹备时间表</h2>
+        <output id="progress" class="progress"></output>
+      </div>
+      <div id="progress-tools" class="progress-tools" hidden>
+        <div class="progress-controls">
+          <button id="copy-progress" class="copy-button" type="button">复制进度链接</button>
+          <p class="progress-tip">更新后复制最新链接，换设备也可恢复。</p>
+        </div>
+        <p id="copy-result" class="copy-result" role="status"></p>
+        <input id="progress-link" class="link-preview" type="url" aria-label="进度链接" readonly hidden>
+      </div>
+      <div class="timeline">
+        <details class="stage">
+          <summary>
+            <span class="stage-window">11 月下旬至 12 月上旬</span>
+            <span class="stage-title">约婚纱照、问住宿团房</span>
+          </summary>
+          <ul class="task-list">
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="photo-appointment">
+                <span>问上海婚纱摄影的可选周末、选片及交付时间。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="room-inquiry">
+                <span>女方家先收 27 日住房需求，男方家按婚宴合同地址问附近团房和停车。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="candy-scope">
+                <span>定喜糖预算和发法，问双方家里有没有要单独送的亲友。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="small-supplies-shopping">
+                <span>先备红包袋和缺的应急小物，拿到婚庆用品清单后补缺项。</span>
+              </label>
+            </li>
+          </ul>
+        </details>
+        <details class="stage">
+          <summary>
+            <span class="stage-window">12 月中旬至 1 月上旬</span>
+            <span class="stage-title">拍婚纱照、试衣、初订客房</span>
+          </summary>
+          <ul class="task-list">
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="photo-shoot">
+                <span>挑一个周末拍婚纱照，留一个备选周末。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="wedding-attire-fitting">
+                <span>在上海约一天试婚礼当天穿的婚纱和男士西装。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="room-hold">
+                <span>按实际家庭需求初订 27 日的客房，记下最晚减房时间。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="extension-hold">
+                <span>按第一轮去留统计问 28 日能留多少续住房，并确认房价和最晚锁房时间。</span>
+              </label>
+            </li>
+          </ul>
+        </details>
+        <details class="stage">
+          <summary>
+            <span class="stage-window">1 月中下旬至春节前</span>
+            <span class="stage-title">定服装和仪式流程</span>
+          </summary>
+          <ul class="task-list">
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="photo-selection">
+                <span>线上选片，确认精修照和迎宾海报什么时候拿得到。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="wedding-attire-reserve">
+                <span>定婚纱和西装的租买方式、款式和尺寸，约好复试或改衣。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="clothes-makeup">
+                <span>试婚鞋并确认跟妆安排。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="family-plan">
+                <span>商量接风饭、接亲、敬茶、新娘出门地点和亲友接待分工。有需要再安排接亲用房。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="red-envelope-plan">
+                <span>估一下接亲和发给小朋友各需几份红包，和双方家里确认敬茶红包分工。</span>
+              </label>
+            </li>
+          </ul>
+        </details>
+        <details class="stage">
+          <summary>
+            <span class="stage-window">2 月下旬至 3 月上旬</span>
+            <span class="stage-title">集中回盐城确认现场、发请柬</span>
+          </summary>
+          <ul class="task-list">
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="venue-walkthrough">
+                <span>约同一个周末试菜、看厅、和司仪过流程，核对开席与预计散席、布置、酒水和自备物料。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="photographer-plan">
+                <span>和已选摄影确认到场时间、地点和跟拍范围。如需录像，一并确认。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="invites">
+                <span>按确定的晚宴时间发请柬、收出席回执，备好婚礼用的精修照和海报。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="candy-order">
+                <span>婚前约 3–5 周，按两边初步人数下单喜糖。</span>
+              </label>
+            </li>
+          </ul>
+        </details>
+        <details class="stage">
+          <summary>
+            <span class="stage-window">3 月中旬至婚前</span>
+            <span class="stage-title">锁人数、取衣服、交接物料</span>
+          </summary>
+          <ul class="task-list">
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="guest-count">
+                <span>按酒店截止时间核对婚宴桌数、27 日房量、28 日续住房量和各车去留。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="guest-meals">
+                <span>核对四顿饭的人数和地点，单独安排 28 日午餐。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="guest-info">
+                <span>把住宿、宴会厅、其他用餐地点和停车定位发给亲友，附上晚宴时间与本地联系人。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="wedding-attire-collection">
+                <span>完成婚纱和西装复试、改衣、取衣，确认谁带回盐城。租来的衣服记好归还日。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="red-envelope-pack">
+                <span>换好 10 元和 20 元纸币，装好小红包并交给当天负责的人。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="wedding-day-kit">
+                <span>核对敬茶和签到用品，把需要自备的物品和应急包提前装好。</span>
+              </label>
+            </li>
+            <li>
+              <label class="task">
+                <input type="checkbox" data-task="handoff">
+                <span>清点喜糖、海报和戒指，定好物料交接、迎宾和带位的人。</span>
+              </label>
+            </li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="guests">
+      <div class="section-top"><h2 id="guests">亲友安排</h2></div>
+      <div class="detail-grid">
+        <section class="card" aria-labelledby="rooms">
+          <h3 id="rooms">自驾与住宿</h3>
+          <dl class="event-list">
+            <div>
+              <dt>按车收回复</dt>
+              <dd>每车记联系人、同行人数和 27 日预计到达时间。分别登记 28 日宴后返家人数、续住人数和续住需要的房间及房型。同车有不同安排时分开记，待定的先单列。</dd>
             </div>
-            <p id="copy-result" class="copy-result" role="status"></p>
-            <input id="progress-link" class="link-preview" type="url" aria-label="进度链接" readonly hidden>
-          </div>
-          <ol class="timeline">
-            <li class="stage">
-              <p class="window">11 月下旬至 12 月上旬</p>
-              <h3>约婚纱照、摸清住宿需求</h3>
-              <ul class="task-list">
-                <li><label class="task"><input type="checkbox" data-task="photo-appointment"><span>问上海婚纱摄影的可选周末，以及选片、精修和海报交付时间。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="room-inquiry"><span>女方家按家庭收住宿需求，男方家按婚宴合同上的门店地址问住宿团房。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="candy-scope"><span>定喜糖的预算和发法，问双方父母有没有需要另外送的亲友。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="small-supplies-shopping"><span>照小件采购清单先买红包袋和缺的应急小物，拿到婚庆用品清单后再补缺项。</span></label></li>
-              </ul>
-            </li>
-            <li class="stage">
-              <p class="window">12 月中旬至 1 月上旬</p>
-              <h3>拍婚纱照、初订客房</h3>
-              <ul class="task-list">
-                <li><label class="task"><input type="checkbox" data-task="photo-shoot"><span>挑一个有空的周末拍婚纱照，留一个备选周末。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="room-hold"><span>按大床、双床和单住房需求初订客房，记下最晚减房时间。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="extension-hold"><span>问酒店能否先留 3 月 28 日晚的续住房，记下房价和最晚确认时间。</span></label></li>
-              </ul>
-            </li>
-            <li class="stage">
-              <p class="window">1 月中下旬至春节前</p>
-              <h3>选片、备礼服、商定家里流程</h3>
-              <ul class="task-list">
-                <li><label class="task"><input type="checkbox" data-task="photo-selection"><span>线上选片，确认婚礼要用的精修照和迎宾海报什么时候能拿到。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="clothes-makeup"><span>试穿礼服和婚鞋，确认跟妆安排。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="family-plan"><span>和父母商量接风饭、接亲、敬茶和新娘出门地点，定一位亲友用餐联系人。有需要再安排婚车和接亲用房。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="red-envelope-plan"><span>和双方父母对一下红包用途，估算接亲和发给小朋友各要几份，另外确认敬茶红包由谁准备。</span></label></li>
-              </ul>
-            </li>
-            <li class="stage">
-              <p class="window">2 月下旬至 3 月上旬</p>
-              <h3>集中回盐城一趟、发请柬</h3>
-              <ul class="task-list">
-                <li><label class="task"><input type="checkbox" data-task="venue-walkthrough"><span>约同一个周末试菜、看厅、和司仪过流程，确认开席、布置、酒水和自备物料。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="photographer-plan"><span>和已选摄影确认到场时间、地点及跟拍范围。如需仪式录像，一并确认。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="invites"><span>发请柬、收出席回执，备好婚礼使用的精修照和海报。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="candy-order"><span>婚前约 3–5 周，按两边确认的初步人数下单喜糖。</span></label></li>
-              </ul>
-            </li>
-            <li class="stage">
-              <p class="window">3 月中旬至婚前一周</p>
-              <h3>锁定房量与桌数、交接物料</h3>
-              <ul class="task-list">
-                <li><label class="task"><input type="checkbox" data-task="guest-count"><span>按酒店约定的截止时间确认 27 日住房、28 日续住、婚宴桌数和接站需求。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="guest-meals"><span>分开核对 27 日晚餐和 28 日三餐的人数，确认各餐地点和集合方式。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="guest-info"><span>给亲友发住宿、宴会厅和其他用餐地点的定位，以及入住方式和本地联系人。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="red-envelope-pack"><span>换好 10 元和 20 元纸币，按面额装好小红包，标好用途，交给当天负责发红包的人。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="wedding-day-kit"><span>核对酒店提供的敬茶和签到用品，把自己要带的物品和应急包提前装好。</span></label></li>
-                <li><label class="task"><input type="checkbox" data-task="handoff"><span>清点喜糖和海报，确认由谁带戒指、交接物料、迎宾和带位。</span></label></li>
-              </ul>
-            </li>
-          </ol>
+            <div>
+              <dt>3 月 27 日下午入住</dt>
+              <dd>女方亲友约两桌，自驾到盐城。若实际住店 18–20 人且两人一间，可先按 9–10 间询价，再按家庭调整。</dd>
+            </div>
+            <div>
+              <dt>3 月 28 日晚续住 · 29 日退房</dt>
+              <dd>按名单留房，问能否原房续住、是否含早及最晚确认时间。28 日退房的亲友可先寄存行李，晚宴后自驾返家。</dd>
+            </div>
+          </dl>
+          <p class="note">订房时问住宿停车位，也和幸福来临确认宴会厅停车入口。</p>
         </section>
 
-        <section class="stage weekend" aria-labelledby="weekend">
-          <h2 id="weekend">婚礼周末</h2>
+        <section class="card" aria-labelledby="meals">
+          <h3 id="meals">四顿饭</h3>
           <dl class="event-list">
-            <dt>周五下班后或周六上午</dt>
-            <dd>从上海回盐城。周六回的话，请当地家人先收物料、对接宴会厅。</dd>
-            <dt>3 月 27 日（周六）下午</dt>
-            <dd>女方亲友自行到盐城，由当地联系人协助入住。晚餐按亲友到达情况安排。</dd>
-            <dt>3 月 28 日（周日）</dt>
-            <dd>按开席时间倒推化妆、仪式、合影和签到。由亲友联系人协调当天三餐、行李寄存和续住。</dd>
-            <dt>3 月 29 日（周一）</dt>
-            <dd>如有亲友续住，提前确认早餐、退房和返程安排。</dd>
+            <div><dt>3 月 27 日 · 晚餐</dt><dd>在住宿酒店附近安排接风饭，按到达人数订，给晚到的亲友留餐。</dd></div>
+            <div><dt>3 月 28 日 · 早餐</dt><dd>优先选含早房型，确认早餐人数和供应时间。</dd></div>
+            <div><dt>3 月 28 日 · 午餐</dt><dd>单独订午餐，按中午留在盐城用餐的人数安排。</dd></div>
+            <div><dt>3 月 28 日 · 晚餐</dt><dd>幸福来临婚宴。开席和预计散席时间定下来后，跟自驾的亲友一起确认去留。</dd></div>
           </dl>
+          <p class="note">四顿分开统计人数。续住的亲友另外确认 29 日早餐。</p>
         </section>
       </div>
+    </section>
 
-      <aside aria-label="已落实的事项与准备清单">
-        <section class="side-card done" aria-labelledby="done">
-          <h2 id="done">已落实</h2>
-          <ul class="done-list">
-            <li>婚宴场地</li><li>婚庆及司仪</li><li>婚礼当天摄影</li><li>戒指</li><li>五金</li><li>彩礼</li>
-          </ul>
-        </section>
-        <section class="side-card" aria-labelledby="rooms">
-          <h2 id="rooms">亲友住宿</h2>
-          <p><strong>3 月 27 日入住。</strong>女方亲友约两桌。若实际有 18–20 人住宿、两人一间，先按 9–10 间询价，再按家庭调整房型。</p>
-          <p><strong>3 月 28 日晚可续住，29 日退房。</strong>预订时问能否原房续住、续住房价、早餐和最晚确认时间。28 日退房的人可以先寄存行李，再按用餐和返程时间取走。</p>
-          <p>一人收房型和到达信息，一人在盐城对接酒店。婚宴地点以合同上的门店和宴会厅为准。</p>
-        </section>
-        <section class="side-card" aria-labelledby="meals">
-          <h2 id="meals">亲友用餐</h2>
+    <section class="section" aria-labelledby="preparations">
+      <div class="section-top"><h2 id="preparations">服装与采购</h2></div>
+      <div class="detail-grid">
+        <section class="card" aria-labelledby="attire">
+          <h3 id="attire">婚纱和男士西装</h3>
           <dl class="event-list">
-            <dt>3 月 27 日 · 晚餐</dt>
-            <dd>在住宿酒店附近安排接风饭，按实际到达人数订位，给晚到的亲友留餐。</dd>
-            <dt>3 月 28 日 · 早餐</dt>
-            <dd>优先订含早的房型，确认早餐份数和供应时间。</dd>
-            <dt>3 月 28 日 · 午餐</dt>
-            <dd>若婚宴在中午，这顿由幸福来临安排。若婚宴在晚上，另订午餐。</dd>
-            <dt>3 月 28 日 · 晚餐</dt>
-            <dd>若婚宴在晚上，这顿由幸福来临安排。若婚宴在中午，按晚上还在盐城用餐的人数另订。</dd>
-          </dl>
-          <p>按家庭记每顿参加的人数和是否续住。午餐、晚餐各算各的，方便按返程计划订位。</p>
-        </section>
-        <section class="side-card" aria-labelledby="candy">
-          <h2 id="candy">喜糖待准备</h2>
-          <p>先定每位宾客一盒或每户一份，再问酒店能否协助摆放，以及放桌上还是签到台。</p>
-          <p><strong>购买量</strong>按双方宾客的发放份数，加上另送亲友的份数，再留约一成备用。婚前一两个周末分装、交给负责摆放的人。</p>
-        </section>
-        <section class="side-card" aria-labelledby="supplies">
-          <h2 id="supplies">小件采购清单</h2>
-          <dl class="event-list">
-            <dt>现在可以买</dt>
-            <dd>小红包袋、标签贴和分装袋。应急包缺什么就补什么，常用的是别针、迷你针线包、衣服双面胶、纸巾、湿巾和创可贴。</dd>
-            <dt>问过婚庆再补买</dt>
-            <dd>签到笔、礼金登记本、收礼袋、桌卡，以及敬茶用的茶杯、茶叶和托盘。若有接亲，再问手捧花和胸花是否包含。</dd>
-            <dt>人数或桌数接近确定再买</dt>
-            <dd>喜糖、糖盒和计划送的伴手礼按发放份数买。桌卡如需自备，按最终桌数准备。</dd>
-            <dt>婚前换零钱、装好当天用品</dt>
-            <dd>换些 10 元和 20 元纸币，按接亲环节和小朋友人数装小红包，再留几份备用。两种面额分袋，敬茶或改口红包单独标好。戒指盒、平底鞋和充电宝从家里带上。</dd>
+            <div><dt>挑有空的周末试穿</dt><dd>一起试主婚纱和男士西装，顺便决定是否准备敬酒服。试衣时搭配婚鞋、衬衫和皮鞋，看看整体效果。</dd></div>
+            <div><dt>春节前定下款式和尺寸</dt><dd>确定租或买，问清改衣、复试、取衣时间。备齐头纱、衬衫、领带或领结、皮带等实际需要的配件。</dd></div>
+            <div><dt>婚前复试和取衣</dt><dd>试一下坐下和走动是否方便。取衣后用衣袋收好，定谁带到盐城。租赁要约好归还时间。</dd></div>
           </dl>
         </section>
-      </aside>
-    </div>
+
+        <section class="card" aria-labelledby="supplies">
+          <h3 id="supplies">小件采购</h3>
+          <dl class="event-list">
+            <div><dt>现在可以买</dt><dd>红包袋、标签贴和分装袋。应急包可补别针、针线包、衣服双面胶、纸巾、湿巾和创可贴。</dd></div>
+            <div><dt>问婚庆后补买</dt><dd>按套餐缺项补签到笔、礼金登记本、收礼袋、桌卡、敬茶杯、茶叶和托盘。手捧花和胸花也先问婚庆。</dd></div>
+            <div><dt>婚前换零钱、把小件装好</dt><dd>提前换 10 元和 20 元纸币，按接亲和小朋友人数装小红包，多备几份。敬茶或改口红包单独标好。随身带戒指盒、平底鞋和充电宝。</dd></div>
+          </dl>
+          <div class="subcard">
+            <h3 id="candy">喜糖和伴手礼</h3>
+            <p>先定每人一盒或每户一份，问酒店能否摆放。按发放人数或户数买喜糖、糖盒和伴手礼，加上另送的份数，再留约一成备用。</p>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="weekend">
+      <div class="section-top"><h2 id="weekend">婚礼周末</h2></div>
+      <div class="card">
+        <dl class="event-list">
+          <div><dt>周五下班后或周六上午</dt><dd>你们从上海回盐城。周六回的话，请家人先收物料、对接宴会厅。</dd></div>
+          <div><dt>3 月 27 日（周六）</dt><dd>上午和司仪核对流程。下午女方亲友自驾到盐城、办入住，晚上按到达情况安排接风饭。</dd></div>
+          <div><dt>3 月 28 日（周日）</dt><dd>白天安排早餐和午餐。化妆、仪式、合影和签到按晚宴时间倒推。晚上在幸福来临办婚宴，散席后亲友按各车登记自驾返家或回酒店续住。</dd></div>
+          <div><dt>3 月 29 日（周一）</dt><dd>续住的亲友用早餐、退房后自行返程。</dd></div>
+        </dl>
+      </div>
+    </section>
   </main>
+
 
   <script>
     const tasks = Array.from(document.querySelectorAll('[data-task]'));
